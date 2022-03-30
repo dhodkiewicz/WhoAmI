@@ -1,2 +1,2 @@
 # WhoAmI
- Text-Based Adventure Game (Collab between: Dalton Hodkiewicz, Vivian Gomez, Kyler Lambert)
+ Text-Based Adventure Game Collaboration Between: Dalton Hodkiewicz, Vivian Gomez, Kyler Lambert
