@@ -112,9 +112,6 @@ public class Room {
 		this.roomCoordinates = new ArrayList<Point>(); // create instance in memory of coordinates so property roomcoordinates isn't null value
 		this.roomCoordinates = tempCoordinates; // set property with temporary coordinates
 	}
-	
-	//Method created for push to my own branch off of main- then todo - Revert Change
-	public void makeRandomMethodToMergeAndBeDeleted() {}
 
 
 }
