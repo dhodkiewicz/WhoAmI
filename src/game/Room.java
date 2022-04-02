@@ -9,24 +9,23 @@ import entity.Npc;
 
 public class Room {
 	
-	private Point dimensions;
-	private List <Point> roomCoordinates;
-	private Point startingDoor;
-	private Point endingDoor;
-	private Point userLocation;
-	private List<Npc> npcs;
+	private Point dimensions; //holds the rooms outermost x,y points
+	private List <Point> roomCoordinates; // list of each individual points within the room (think spaces that will hold char location, item location, etc)
+	private Point startingDoor; // the starting door
+	private Point endingDoor; // the ending door
+	private Point userLocation; // might not need this to track user location within the room but will leave for now, could be held by user
+	private List<Npc> npcs; // the list of the npcs within a room
 	
-	public Room() {
-		Random rand = new Random();
+	public Room() { // the rooms constructor
 		final int upper_bound = 60; // set upper bound for x axis and y axis of room
 		final int lower_bound = 40; // set lower bound for x axis and y axis
 		
-		int randomValue = (int)Math.floor(Math.random()*(upper_bound-lower_bound+1)+ lower_bound);
-		Point point = new Point();
-		this.dimensions = point;
-		dimensions.x = randomValue;
-		randomValue = (int)Math.floor(Math.random()*(upper_bound-lower_bound+1)+ lower_bound);
-		dimensions.y = randomValue;
+		int randomValue = (int)Math.floor(Math.random()*(upper_bound-lower_bound+1)+ lower_bound); // generate random value between lower + upper bound
+		Point point = new Point(); // create a new point which will hold random generated outer bound x,y values
+		this.dimensions = point; // instantiate this objects dimensions property with a blank point
+		dimensions.x = randomValue; // set the dimensions to the random generated value for x
+		randomValue = (int)Math.floor(Math.random()*(upper_bound-lower_bound+1)+ lower_bound); // generate the random value between values
+		dimensions.y = randomValue; // set the dimensions for y
 		
 		populateRoomCoordinates(); // populate room coordinates upon instantiation
 		
@@ -84,7 +83,7 @@ public class Room {
 	//set the doors
 	public void setDoors() {
 		int y = this.dimensions.y / 2;
-		int x = 0; // for now pretend on x and y axis- that these doors will be connected from Left to Right order
+		int x = 0; //  x and y axis- that these doors will be connected from Left to Right order
 		Point door = new Point(x,y); // create starting point for room
 		this.startingDoor = door;
 		
@@ -103,15 +102,15 @@ public class Room {
 	
 	//method to populate room coordinates
 	public void populateRoomCoordinates() {
-		List<Point> tempCoordinates= new ArrayList<Point>();
-		for (int x = 0; x < this.dimensions.x; x++){
-			for(int y = 0; y< this.dimensions.y;y++) {
+		List<Point> tempCoordinates= new ArrayList<Point>(); // insantiate temporary list of coordinates/points
+		for (int x = 0; x < this.dimensions.x; x++){ //outer loop
+			for(int y = 0; y< this.dimensions.y;y++) { //inner loop
 				Point p = new Point(x,y);
-				tempCoordinates.add(p);
+				tempCoordinates.add(p); // add to temporary list
 			}
 		}
-		this.roomCoordinates = new ArrayList<Point>(); // create instance in memory of coordinates so roomcoordinates isn't null value
-		this.roomCoordinates = tempCoordinates; // instantiate property with temporary coordinates
+		this.roomCoordinates = new ArrayList<Point>(); // create instance in memory of coordinates so property roomcoordinates isn't null value
+		this.roomCoordinates = tempCoordinates; // set property with temporary coordinates
 	}
 
 

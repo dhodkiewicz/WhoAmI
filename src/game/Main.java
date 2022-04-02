@@ -17,6 +17,7 @@ public class Main {
 		}                             // behind linking them together
 		
 		room.setDoors();
+		System.out.println(room.getRoomCoordinates().size());
 		System.out.println(room.getStartingDoor()); // arbitrary way of setting door locations for now- will work on logic later
 		System.out.println(room.getEndingDoor());
 		
