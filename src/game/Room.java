@@ -15,6 +15,7 @@ public class Room {
 	private Point endingDoor; // the ending door
 	private Point userLocation; // might not need this to track user location within the room but will leave for now, could be held by user
 	private List<Npc> npcs; // the list of the npcs within a room
+	private int id; // room id for tracking which room the user is currently in (allows us to still use the point class instead of having to make a <a,b,c> type class
 	
 	public Room() { // the rooms constructor
 		final int upper_bound = 60; // set upper bound for x axis and y axis of room
@@ -80,6 +81,17 @@ public class Room {
 		this.npcs = npcs;
 	}
 	
+	//getter for room's id
+	public int getId() {
+		return id;
+	}
+
+	//setter for rooms id
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	
 	//set the doors
 	public void setDoors() {
 		int y = this.dimensions.y / 2;
@@ -112,6 +124,7 @@ public class Room {
 		this.roomCoordinates = new ArrayList<Point>(); // create instance in memory of coordinates so property roomcoordinates isn't null value
 		this.roomCoordinates = tempCoordinates; // set property with temporary coordinates
 	}
+
 
 
 }
