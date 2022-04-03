@@ -131,9 +131,8 @@ public class Game implements Command {
 				return;
 			}
 			if (!flag) {
-				System.out.println("Not a valid command");
+				/* System.out.println("Not a valid command"); */
 			}
-			System.out.println(vc.getCommand());
 		}
 		
 	}
@@ -151,11 +150,16 @@ public void moveUser(String s) {
 	if(s.equals("move north")){
 		if(yValue == this.getCurrentRoom().getDimensions().y) {
 			System.out.println("bump, you hit a wall!");
+			return;
 		}
 		tempPoint.setLocation(xValue, yValue + 1);
 		System.out.println("You moved north");
 	}
 	if(s.equals("move south")){
+		if(yValue == 0) {			
+			System.out.println("bump, you hit a wall!");
+			return;
+		}
 		tempPoint.setLocation(xValue, yValue - 1);
 		System.out.println("You moved south");
 	}
@@ -168,6 +172,10 @@ public void moveUser(String s) {
 		System.out.println("You moved west");
 	}
 	if(s.equals("move east")){
+		if(xValue == this.getCurrentRoom().getDimensions().x) {
+			System.out.println("bump, you hit a wall!");
+			return;
+		}
 		tempPoint.setLocation(xValue + 1, yValue);
 		System.out.println("You moved east");
 	}
