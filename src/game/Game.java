@@ -1,21 +1,141 @@
 package game;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-public class Game {
+import entity.User;
 
-	private List<Room>rooms;
+public class Game implements Command {
+
+	private List<Room>rooms; //field for our list of Rooms
+	private User user; //field for our user
+	private boolean isGameOver; //field to check if game is over or not
+
 	
-	public Game() {
-		// TODO Auto-generated constructor stub
+	public Game() { // constructor for game will autopopulate rooms (for now) -- next will establish method(s) to link doors/rooms together
+		this.setGameOver(false);
+		User user = new User();
+		List<Room> rooms = new ArrayList<Room>();
+		Room roomOne= new Room(); // instantiate a room
+		Room roomTwo= new Room(); // instantiate a room
+		Room roomThree= new Room(); // instantiate a room
+		Room roomFour= new Room(); // instantiate a room
+		roomOne.setId(0);
+		roomOne.setDoors();
+		user.setLocation(roomOne.getStartingDoor()); // instantiate user and set their starting position to initial "door"
+		this.user = user; // set to our field
+		rooms.add(roomOne);
+		roomTwo.setId(1);
+		roomTwo.setDoors();
+		rooms.add(roomTwo);
+		roomThree.setId(2);
+		roomThree.setDoors();
+		rooms.add(roomThree);
+		roomFour.setId(3);
+		roomFour.setDoors();
+		rooms.add(roomFour);
+		this.rooms = rooms;
+		
 	}
 
+	//getter for rooms
 	public List<Room> getRooms() {
 		return rooms;
 	}
 
+	//setter for rooms
 	public void setRooms(List<Room> rooms) {
 		this.rooms = rooms;
 	}
+
+	//get user
+	public User getUser() {
+		return user;
+	}
+
+	//set the user
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	@Override
+	public void moveNorth() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveSouth() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveWest() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveEast() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void use() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void grab() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
+	public boolean isGameOver() {
+		return isGameOver;
+	}
+
+	public void setGameOver(boolean isGameOver) {
+		this.isGameOver = isGameOver;
+	}
+	
+	   public static void promptEnterKey(){
+	        System.out.println("Press \"ENTER\" to continue...");
+	        System.out.println();
+	        System.out.println();
+	        try {
+	            int read = System.in.read(new byte[2]);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	@Override
+	public void determineMove(String s) {
+		boolean flag = false;
+		for (ValidCommands vc: ValidCommands.values()) {
+			if(s == vc.toString()) {
+				flag = true;
+				System.out.println("valid command");
+			}
+			if (!flag) {
+				System.out.println("Not a valid command");
+			}
+		}
+		
+	}
+	
+
+
+
+
+
 
 }

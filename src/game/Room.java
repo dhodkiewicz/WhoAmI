@@ -3,8 +3,6 @@ package game;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 import entity.Npc;
 
 public class Room {
@@ -15,7 +13,7 @@ public class Room {
 	private Point endingDoor; // the ending door
 	private Point userLocation; // might not need this to track user location within the room but will leave for now, could be held by user
 	private List<Npc> npcs; // the list of the npcs within a room
-	private int id; // room id for tracking which room the user is currently in (allows us to still use the point class instead of having to make a <a,b,c> type class
+	private int id; // room id for tracking which room the user is currently in (allows us to still use the point obj instead of having to make a <a,b,c> type class
 	
 	public Room() { // the rooms constructor
 		final int upper_bound = 60; // set upper bound for x axis and y axis of room
