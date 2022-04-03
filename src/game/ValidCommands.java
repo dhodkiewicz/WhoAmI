@@ -5,8 +5,14 @@ public enum ValidCommands {
 	MOVE_SOUTH("move south"),
 	MOVE_EAST("move east"),
 	MOVE_WEST("move west");
+	
+	private String command;
 
 	ValidCommands(String string) {
-		// TODO Auto-generated constructor stub
+		this.command = string;
+	}
+	
+	public String getCommand() {
+		return this.command;
 	}
 }
