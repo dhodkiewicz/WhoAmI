@@ -32,5 +32,5 @@ How will player/user move?
 
 player will be moving via command. Initially planned on using keyboard but personally, although I know how to make forms it's not necessary for this project and we can work on having an absolute beast of a console project, which is cool.
 
-Let's focus on Story later, and foundation first. As long as we can understand the player movements/interactions etc, we can focus on dialog later. Kind of the beauty of the title is, we don't really want the character to know who/what they are right away.
+Let's focus on Story later fundamental design first. As long as we can understand the player movements/interactions etc, we can focus on dialog later. Kind of the beauty of the title is we don't really want/need the character to know who/what they are right away.
 --
