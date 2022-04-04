@@ -35,7 +35,6 @@ public class Main {
 			System.out.println("Please enter a command: " + "\n");
 			Scanner in = new Scanner(System.in);
 			String s = in.nextLine();
-			System.out.println("You entered : " + s);
 			game.determineMove(s);
 		}
 	}
