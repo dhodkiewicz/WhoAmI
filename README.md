@@ -9,12 +9,12 @@ What Do you do?
 --
 Whatever you want. Make a new branch- start making changes on that branch or implementing things. If something isn't making sense that's okay- just reach out on discord I'll answer more than likely within 24 hours.
 
-I use GitHub for desktop, I essentially made a repository, then put or created my project within the repository. It watches the repository for any changes that are saved and instantly highlights the changes. You will essentially be working on your own branch of the repository but it still will be the same repository- just a branch off of it. So when you make changes you will be submitting your branch changes and then we will merge them. If it doesn't make sense watch this. https://www.youtube.com/watch?v=RPagOAUx2SQ&t=419s
+I use GitHub for desktop, I essentially made a repository, then put or created my project within the repository. It watches the repository for any changes that are saved and instantly highlights the changes. You will essentially be working on your own branch of the repository. Make a change? Cool, save that change, you push it to your branch of the repo, then pull req/merge the repo with the main branch. If it doesn't make sense watch this. https://www.youtube.com/watch?v=RPagOAUx2SQ&t=419s
 --
 
 Step 1
 --
-Create branch- ideas for name convention can just be your names
+Create branch- ideas for name convention can just be your names with whatever feature-area you plan on working on for said branch. example Dalton_wip_GameLayout etc. wip = Work in progress.
 
 Step 2
 --
