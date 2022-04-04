@@ -3,7 +3,7 @@
 
 Goals for Team:
 --
-Try to document every variable- every method (if you look at the code right now it's not that way but I will be making a conscious effort to explain everything)
+Try to document thoroughly, as I will do the same. Let's try to keep consistency and not have properties that names that don't make sense. I don't mind if you are lax on temporary variables, but for sake of readability for my temporary/placeholder variables I try to name them as such for inst tempName, tempLocation, etc so that way you can sort of derive what it's purpose serves without having to think too much!
 
 What Do you do?
 --
@@ -18,11 +18,8 @@ Create branch- ideas for name convention can just be your names
 
 Step 2
 --
-When you make changes locally you push them to the repository
+When you make changes locally you push them to your branch. You are now all added as contributors and the repo is public so you should be able to merge your own branch. Try to do merges with the main often, also any time you do a merge let's let eachother know via our discord so that way we don't run into conflicts. Let's try to do too much at a time as each branch theoretically should be for a feature, that way we know you are working on one thing or one general area and can avoid making conflicting changes amongst ourselves.
 
-Step 3
---
-Essentially, I'll look at the work and choose to merge it with the main branch- sometime's there can be conflicts, but hopefully there won't be :) I try to honestly do pushes pretty frequently so that way I know that my stuff is working and that work is saved and updated frequently.
 
 
 
@@ -33,9 +30,7 @@ He mentioned this in class, I love the idea and it's kind of brutal but makes fo
 How will player/user move?
 --
 
-I think i'll have keybindings for arrows- so instead of "look right" "move north" we are going to have it where if you move right the system will simply print- step north- step west- step south- etc. 
+player will be moving via command. Initially planned on using keyboard but personally, although I know how to make forms it's not necessary for this project and we can work on having an absolute beast of a console project, which is cool.
 
-If a player hits an object it will make a sound- each object/npc bumped into will make a different sound (like "orkk") if it's an orc- or "bump" if it's a wall or "knock" if it's a door- etc.
-
-I'll be adding another file in the repo called story. It can be collaborative too! Don't feel afraid to say something seems dumb or doesn't make sense, because the last thing I want is for either of you to feel 100% lost. I'm not your employer, just a fellow student. We are in this together and any and all help will be extremely appreciated. Let's try to make this fun and not wait until the very end so we aren't more stressed than we need to be.
+Let's focus on Story later, and foundation first. As long as we can understand the player movements/interactions etc, we can focus on dialog later. Kind of the beauty of the title is, we don't really want the character to know who/what they are right away.
 --
