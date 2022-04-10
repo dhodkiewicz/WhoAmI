@@ -4,7 +4,7 @@ import java.awt.Point;
 
 public class Item {
 
-	private Point location; // holds the point location
+	private Point location;
 	private itemType type; //private variable for holding itemtype
 	private enum itemType{healthPotion,longsword,shortsword,axe,knife,flashlight,key,map} //private enum that holds our types
 	public Item() {
