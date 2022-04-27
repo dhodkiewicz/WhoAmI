@@ -10,14 +10,18 @@ public class Item
 	private Point location;			// The location of the item.
 	private itemType type; 			// Private variable for holding itemType
 	private String itemDescription; // Describes the item.
-	private enum itemType{healthPotion,longsword,shortsword,axe,knife,flashlight,key,map} //private enum that holds our types
+	public enum itemType{healthPotion,longsword,shortsword,axe,knife,flashlight,key,map} //private enum that holds our types
+	
+	public Item() {
+		
+	}
 	
 	/**
 	 * Constructor - Items that will be given to user at the start of a game.
 	 * @param type
 	 * @param desc
 	 */
-	public Item(String type , String desc)
+	public Item(itemType type , String desc)
 	{
 		// Set the item type and description.
 		setType(type);
@@ -28,33 +32,23 @@ public class Item
 	 * Constructor - Used for items that will be scattered in a room for the user to find.
 	 * 			1.3 - Use of overloaded method/constructor.
 	 * @param type
-	 * @param desc
-	 * @param itemLocation
+	 * @param location
 	 */
-	public Item(String type, String desc, Point itemLocation)
-	{
-		// Set the item type, description, and location.
-		setType(type);
-		setItemDescription(desc);
-		setLocation(itemLocation);
+	public Item(itemType type, Point location) {
+		this.type = type;
+		this.location = location;
 	}
 	
 	// Getter for itemType
-	public String getType()
+	public itemType getType()
 	{
-		return type.toString();
+		return type;
 	}
 	
 	// Setter for itemType
-	public void setType(String type)
+	public void setType(itemType type)
 	{
-		// If the item is found in the enum, set the item type.
-		for(itemType item : itemType.values()) {
-			if(type == item.toString()) {
-				this.type = item;
-				break;
-			}
-		}	
+		this.type = type;
 	}
 	
 	// Getter for item location
@@ -68,18 +62,58 @@ public class Item
 	{
 		this.location = location;
 	}
-
+	
 	// Getter for item description.
 	public String getItemDescription()
 	{
 		return itemDescription;
 	}
-	
+
 	// Setter for item description.
 	public void setItemDescription(String itemDesc)
 	{
 		this.itemDescription = itemDesc;
 	}
+	
+	//return all item types
+	public static itemType[] getAllItemTypes() {
+		return itemType.values();
+	}
+	
+	
+	//method to help easily set item types
+		public itemType setTypeByInt(int value) {
+			itemType type = null;
+
+			if(value == 0) {
+				type = itemType.key;
+			}
+			if(value == 1) {
+				type = itemType.flashlight;
+			}
+			if(value == 2) {
+				type = itemType.map;
+			}
+			if(value == 3) {
+				type = itemType.healthPotion;
+			}
+			if(value == 4) {
+				type = itemType.longsword;
+			}
+			if(value == 5) {
+				type = itemType.shortsword;
+			}
+			if(value == 6) {
+				type = itemType.axe;
+			}
+			if(value == 7) {
+				type = itemType.knife;
+			}
+
+			return type;
+
+		}
+
 	
 	
 	// -------------------------

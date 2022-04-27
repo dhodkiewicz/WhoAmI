@@ -1,17 +1,20 @@
 package game;
 
+import java.awt.Point;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import entity.User;
+import item.Item;
 
 public class Game implements Command {
 
-	private List<Room>rooms; //field for our list of Rooms
+	private List<Room>rooms; //field for our list of
+	private Room currentRoom; // the current room user is in
 	private User user; //field for our user
 	private boolean isGameOver; //field to check if game is over or not
+
 
 	
 	public Game() { // constructor for game will autopopulate rooms (for now) -- next will establish method(s) to link doors/rooms together
@@ -25,6 +28,7 @@ public class Game implements Command {
 		roomOne.setId(0);
 		roomOne.setDoors();
 		user.setLocation(roomOne.getStartingDoor()); // instantiate user and set their starting position to initial "door"
+		this.currentRoom = roomOne;
 		this.user = user; // set to our field
 		rooms.add(roomOne);
 		roomTwo.setId(1);
@@ -37,6 +41,7 @@ public class Game implements Command {
 		roomFour.setDoors();
 		rooms.add(roomFour);
 		this.rooms = rooms;
+	
 		
 	}
 
@@ -121,21 +126,116 @@ public class Game implements Command {
 	public void determineMove(String s) {
 		boolean flag = false;
 		for (ValidCommands vc: ValidCommands.values()) {
-			if(s == vc.toString()) {
+			if(s.equals(vc.getCommand())) {
 				flag = true;
-				System.out.println("valid command");
+				moveUser(s);
+				return;
 			}
 			if (!flag) {
-				System.out.println("Not a valid command");
+				/* System.out.println("Not a valid command"); */
 			}
 		}
 		
 	}
 	
 
+public void moveUser(String s) {
+	int xValue;
+	int yValue;
+	User tempUser = new User();
+	tempUser = this.getUser();
+	Point tempPoint = new Point();
+	tempPoint = this.user.getLocation();
+	xValue = tempPoint.x;
+	yValue = tempPoint.y;
+	if(s.equals("move north")){
+		if(yValue == this.getCurrentRoom().getDimensions().y) {
+			System.out.println("bump, you hit a wall!");
+			return;
+		}
+		tempPoint.setLocation(xValue, yValue + 1);
+		System.out.println("You moved north");
+	}
+	if(s.equals("move south")){
+		if(yValue == 0) {			
+			System.out.println("bump, you hit a wall!");
+			return;
+		}
+		tempPoint.setLocation(xValue, yValue - 1);
+		System.out.println("You moved south");
+	}
+	if(s.equals("move west")){
+		if(xValue == 0) {
+			System.out.println("bump, you hit a wall!");
+			return;
+		}
+		tempPoint.setLocation(xValue - 1, yValue);
+		System.out.println("You moved west");
+	}
+	if(s.equals("move east")){
+		if(xValue == this.getCurrentRoom().getDimensions().x) {
+			System.out.println("bump, you hit a wall!");
+			return;
+		}
+		tempPoint.setLocation(xValue + 1, yValue);
+		System.out.println("You moved east");
+	}
+	tempUser.setLocation(tempPoint);
+	this.user = tempUser;
+  }
 
+public Room getCurrentRoom() {
+	return currentRoom;
+}
 
+public void setCurrentRoom(Room currentRoom) {
+	this.currentRoom = currentRoom;
+}
 
+public Item isUserNearItem() {
+	Room r = getCurrentRoom();
+	
+	for(Item i : r.getRoomItems()) {
+		Point p = i.getLocation();
+		for(Point point :getPointsAroundUser()) {
+			if(point.equals(p)) {
+				return i;
+			}
+		}
+	}
+	return null;
+}
+
+//get all the points in a bubble around the user
+public List<Point> getPointsAroundUser(){
+	List<Point> points = new ArrayList<Point>();
+	Point p5 = this.user.getLocation();
+	int x = p5.x;
+	int y = p5.y;
+	
+	Point p1 = new Point(x-1, y-1);
+	Point p2 = new Point(x, y-1);
+	Point p3 = new Point(x + 1, y-1);
+	Point p4 = new Point(x - 1, y);
+	Point p6 = new Point(x + 1, y);
+	Point p7 = new Point(x - 1, y + 1);
+	Point p8 = new Point(x, y + 1);
+	Point p9 = new Point(x + 1, y + 1);
+	
+	// add them all to the temporary list
+	points.add(p1);
+	points.add(p2);
+	points.add(p3);
+	points.add(p4);
+	points.add(p5);
+	points.add(p6);
+	points.add(p7);
+	points.add(p8);
+	points.add(p9);
+	
+	// return the list
+	return points;
+}
 
 
 }
