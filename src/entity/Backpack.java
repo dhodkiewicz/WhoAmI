@@ -59,29 +59,35 @@ public class Backpack
 
 	
 	////////////////////////////////// TEMP - TESTING CODE BELOW ////////////////////////////////////////
-	// Probably don't need this since it is already in the Item class.
+	// Probably don't need this since the getBackpack method gets the items in a backpack which could be
+	// used to search for an item in list.
+	// When I test this method, I get a "Source not found" page for the file DirectMethodHandle$Holder.class
+	// 04/27/22
 	/**
 	 * This method searches the backpack to see if the item the user is looking for is in the backpack.
-	 * 				4.3 - Use of a custom functional interface.
+	 * 
 	 * @param itemName
 	 * @return item
 	 */
-	public synchronized Function<String, Item> findItem()
+	public synchronized Item findItem(String itemName)
 	{
+		Item itemToReturn = null;
+		
+		// Function Functional Interface
 		Function<String, Item> findItem = (iName) -> {
-			Item itemToReturn = null;
 			
 			for(Item item : backpack)
 			{
-				if(iName.toLowerCase() == item.getType()) {
+				if(iName.toLowerCase() == item.getType().toString()) {
 					return item;
 				}
 			}
-			return itemToReturn;
-
+			return null;
 		};
 		
-		return null;	// If item is not in the backpack, return null. Handle this where the method is called.
+		itemToReturn = findItem.apply(itemName);
+		
+		return itemToReturn;	// If item is not in the backpack, return null. Handle this where the method is called.
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,47 +109,36 @@ public class Backpack
  * IGNORE. Random code used for testing.
  * 
 	Backpack backpack = Backpack.getInstance();
-						
-	Item shortSword = new Item("shortsword", "I am a short sword");
-	Item axe = new Item("axe", "I am an axe");
-					
-						
+	Item shortSword = new Item(itemType.shortsword, "I am a short sword");
+	Item axe = new Item(itemType.axe, "I am an axe");					
 	backpack.addToBackpack(shortSword);
 	backpack.addToBackpack(axe);
-						
+										
 	if (backpack.getBackpack() != null) {
-		for(Item i : backpack.getBackpack()) {
-			System.out.println(i.getItemDescription());
+		for(Item x : backpack.getBackpack()) {
+			System.out.println(x.getItemDescription());
 		}
-							
-		//System.out.println(backpack.getBackpack());
 	}
 	else {
 		System.out.println("There are no items in the backpack.");
 	}
-						
+										
 	System.out.println(backpack.toString()); 
-
 	System.out.println("Type the name of an item to find in your backpack.");
-			
 	String itemName = in.nextLine();
-			
+							
 	if (!itemName.isBlank())
 	{
-		Item itemFound = backpack.findItem().apply(itemName);
+		Item itemFound = backpack.findItem(itemName);
 		if(itemFound != null)
 		{
 			System.out.println("The item you were looking for is in the backpack. What would you like to do with it?");	
 		}
-		else
-		{
+		else {
 			System.out.println("The item you are looking for is not in the backpack. Try looking for a different item.");
-		}
-				
+		}		
 	}
-	else
-	{
-			System.out.println("Please enter an item name.");
+	else {
+		System.out.println("Please enter an item name.");
 	}
-			
  */

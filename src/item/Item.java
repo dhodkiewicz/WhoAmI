@@ -82,37 +82,37 @@ public class Item
 	
 	
 	//method to help easily set item types
-		public itemType setTypeByInt(int value) {
-			itemType type = null;
+	public itemType setTypeByInt(int value) {
+		itemType type = null;
 
-			if(value == 0) {
-				type = itemType.key;
-			}
-			if(value == 1) {
-				type = itemType.flashlight;
-			}
-			if(value == 2) {
-				type = itemType.map;
-			}
-			if(value == 3) {
-				type = itemType.healthPotion;
-			}
-			if(value == 4) {
-				type = itemType.longsword;
-			}
-			if(value == 5) {
-				type = itemType.shortsword;
-			}
-			if(value == 6) {
-				type = itemType.axe;
-			}
-			if(value == 7) {
-				type = itemType.knife;
-			}
-
-			return type;
-
+		if(value == 0) {
+			type = itemType.key;
 		}
+		if(value == 1) {
+			type = itemType.flashlight;
+		}
+		if(value == 2) {
+			type = itemType.map;
+		}
+		if(value == 3) {
+			type = itemType.healthPotion;
+		}
+		if(value == 4) {
+			type = itemType.longsword;
+		}
+		if(value == 5) {
+			type = itemType.shortsword;
+		}
+		if(value == 6) {
+			type = itemType.axe;
+		}
+		if(value == 7) {
+			type = itemType.knife;
+		}
+
+		return type;
+
+	}
 
 	
 	
