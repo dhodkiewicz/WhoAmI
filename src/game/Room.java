@@ -135,17 +135,17 @@ public class Room {
 			itemType[] itemTypes = item.getAllItemTypes(); // get all of the item types
 			
 					
-			int counter = 0;
-			for(itemType t: itemTypes) {
-				int randomValue = (int)Math.floor(Math.random()*(getRoomCoordinates().size())+ 1);
-				Point p = coordinates.get(randomValue);
-				Item i = new Item(counter, p);
-				roomItems.add(i);
-				counter++;
+			for(itemType t: itemTypes) { // loop through all item types
+				int randomValue = (int)Math.floor(Math.random()*(getRoomCoordinates().size())); // random value between 0 and room coords max length
+				Point p = coordinates.get(randomValue); // set a point equal to the random value index of the rooms coordinates
+				Item i = new Item(t, p); //create new item passing type and point
+				roomItems.add(i); // add the item
+
 			}
 			
 			this.setRoomItems(roomItems);
 	}
+	
 
 	public List<Item> getRoomItems() {
 		return roomItems;

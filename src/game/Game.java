@@ -194,14 +194,47 @@ public void setCurrentRoom(Room currentRoom) {
 
 public Item isUserNearItem() {
 	Room r = getCurrentRoom();
-	Point playerLocation = this.user.getLocation();
+	
 	for(Item i : r.getRoomItems()) {
 		Point p = i.getLocation();
-		if(playerLocation.equals(p)) {
-			return i;
+		for(Point point :getPointsAroundUser()) {
+			if(point.equals(p)) {
+				return i;
+			}
 		}
 	}
 	return null;
+}
+
+//get all the points in a bubble around the user
+public List<Point> getPointsAroundUser(){
+	List<Point> points = new ArrayList<Point>();
+	Point p5 = this.user.getLocation();
+	int x = p5.x;
+	int y = p5.y;
+	
+	Point p1 = new Point(x-1, y-1);
+	Point p2 = new Point(x, y-1);
+	Point p3 = new Point(x + 1, y-1);
+	Point p4 = new Point(x - 1, y);
+	Point p6 = new Point(x + 1, y);
+	Point p7 = new Point(x - 1, y + 1);
+	Point p8 = new Point(x, y + 1);
+	Point p9 = new Point(x + 1, y + 1);
+	
+	// add them all to the temporary list
+	points.add(p1);
+	points.add(p2);
+	points.add(p3);
+	points.add(p4);
+	points.add(p5);
+	points.add(p6);
+	points.add(p7);
+	points.add(p8);
+	points.add(p9);
+	
+	// return the list
+	return points;
 }
 
 
