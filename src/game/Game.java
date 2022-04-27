@@ -4,9 +4,9 @@ import java.awt.Point;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import entity.User;
+import item.Item;
 
 public class Game implements Command {
 
@@ -41,6 +41,7 @@ public class Game implements Command {
 		roomFour.setDoors();
 		rooms.add(roomFour);
 		this.rooms = rooms;
+	
 		
 	}
 
@@ -189,6 +190,18 @@ public Room getCurrentRoom() {
 
 public void setCurrentRoom(Room currentRoom) {
 	this.currentRoom = currentRoom;
+}
+
+public Item isUserNearItem() {
+	Room r = getCurrentRoom();
+	Point playerLocation = this.user.getLocation();
+	for(Item i : r.getRoomItems()) {
+		Point p = i.getLocation();
+		if(playerLocation.equals(p)) {
+			return i;
+		}
+	}
+	return null;
 }
 
 

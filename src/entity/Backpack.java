@@ -4,7 +4,7 @@ import java.util.List;
 
 import item.Item;
 
-public interface Backpack {
+public class Backpack {
 
 	public static List<Item>backpack = null;
 }
