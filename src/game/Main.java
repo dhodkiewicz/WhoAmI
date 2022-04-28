@@ -1,11 +1,14 @@
 package game;
 
-import java.awt.Point;
-import java.awt.event.ActionListener;
 import java.util.Scanner;
 
+import item.Item;
+
+
+
+
 /*
- * @author Dalton Hodkiewicz, Vivian Gomez, Kyler Lambert
+ * @author Dalton Hodkiewicz, Vivian Gomez
  * */
 
 public class Main {
@@ -30,13 +33,28 @@ public class Main {
 			 * define amount of Rooms upon instantiation and logic }
 			 */
 		}
-
+		Scanner in = new Scanner(System.in);
 		while(!game.isGameOver()) {
 			System.out.println("Please enter a command: " + "\n");
-			Scanner in = new Scanner(System.in);
 			String s = in.nextLine();
 			game.determineMove(s);
+			
+			Item i = game.isUserNearItem();
+			if (isUserNearItem(i)) {
+				//TODO ask player if they would like to pick up the item and infer logic
+				System.out.println("User is near a " + i.getType() + " would you like to pick it up?");
+			}
+			
 		}
+		in.close();
 	}
 
+	public static boolean isUserNearItem(Item i){
+		if(i == null)
+		return false;
+		else {
+			return true;
+		}
+		
+	}
 }

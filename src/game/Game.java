@@ -4,9 +4,9 @@ import java.awt.Point;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import entity.User;
+import item.Item;
 
 public class Game implements Command {
 
@@ -41,6 +41,7 @@ public class Game implements Command {
 		roomFour.setDoors();
 		rooms.add(roomFour);
 		this.rooms = rooms;
+	
 		
 	}
 
@@ -189,6 +190,51 @@ public Room getCurrentRoom() {
 
 public void setCurrentRoom(Room currentRoom) {
 	this.currentRoom = currentRoom;
+}
+
+public Item isUserNearItem() {
+	Room r = getCurrentRoom();
+	
+	for(Item i : r.getRoomItems()) {
+		Point p = i.getLocation();
+		for(Point point :getPointsAroundUser()) {
+			if(point.equals(p)) {
+				return i;
+			}
+		}
+	}
+	return null;
+}
+
+//get all the points in a bubble around the user
+public List<Point> getPointsAroundUser(){
+	List<Point> points = new ArrayList<Point>();
+	Point p5 = this.user.getLocation();
+	int x = p5.x;
+	int y = p5.y;
+	
+	Point p1 = new Point(x-1, y-1);
+	Point p2 = new Point(x, y-1);
+	Point p3 = new Point(x + 1, y-1);
+	Point p4 = new Point(x - 1, y);
+	Point p6 = new Point(x + 1, y);
+	Point p7 = new Point(x - 1, y + 1);
+	Point p8 = new Point(x, y + 1);
+	Point p9 = new Point(x + 1, y + 1);
+	
+	// add them all to the temporary list
+	points.add(p1);
+	points.add(p2);
+	points.add(p3);
+	points.add(p4);
+	points.add(p5);
+	points.add(p6);
+	points.add(p7);
+	points.add(p8);
+	points.add(p9);
+	
+	// return the list
+	return points;
 }
 
 

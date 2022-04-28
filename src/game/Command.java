@@ -1,8 +1,5 @@
 package game;
 
-import java.util.Scanner;
-
-import entity.User;
 
 public interface Command {
 
