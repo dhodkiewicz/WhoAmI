@@ -10,6 +10,7 @@ import java.util.function.Function;
 
 import item.Item;
 
+<<<<<<< HEAD
 public class Backpack
 {
 	// 1.5 - Use of the Static keyword
@@ -101,44 +102,85 @@ public class Backpack
 		return backpack.toString();
 	}
 	
+=======
+public class Backpack {
+
+	public static List<Item>backpack = null;
+>>>>>>> main
 }
 
 
 
 /*
  * IGNORE. Random code used for testing.
- * 
+ *
 	Backpack backpack = Backpack.getInstance();
+<<<<<<< HEAD
 	Item shortSword = new Item(itemType.shortsword, "I am a short sword");
 	Item axe = new Item(itemType.axe, "I am an axe");					
 	backpack.addToBackpack(shortSword);
 	backpack.addToBackpack(axe);
 										
+=======
+
+	Item shortSword = new Item("shortsword", "I am a short sword");
+	Item axe = new Item("axe", "I am an axe");
+
+
+	backpack.addToBackpack(shortSword);
+	backpack.addToBackpack(axe);
+
+>>>>>>> main
 	if (backpack.getBackpack() != null) {
 		for(Item x : backpack.getBackpack()) {
 			System.out.println(x.getItemDescription());
 		}
+<<<<<<< HEAD
+=======
+
+		//System.out.println(backpack.getBackpack());
+>>>>>>> main
 	}
 	else {
 		System.out.println("There are no items in the backpack.");
 	}
+<<<<<<< HEAD
 										
 	System.out.println(backpack.toString()); 
 	System.out.println("Type the name of an item to find in your backpack.");
 	String itemName = in.nextLine();
 							
+=======
+
+	System.out.println(backpack.toString());
+
+	System.out.println("Type the name of an item to find in your backpack.");
+
+	String itemName = in.nextLine();
+
+>>>>>>> main
 	if (!itemName.isBlank())
 	{
 		Item itemFound = backpack.findItem(itemName);
 		if(itemFound != null)
 		{
-			System.out.println("The item you were looking for is in the backpack. What would you like to do with it?");	
+			System.out.println("The item you were looking for is in the backpack. What would you like to do with it?");
 		}
 		else {
 			System.out.println("The item you are looking for is not in the backpack. Try looking for a different item.");
+<<<<<<< HEAD
 		}		
+=======
+		}
+
+>>>>>>> main
 	}
 	else {
 		System.out.println("Please enter an item name.");
 	}
+<<<<<<< HEAD
  */
+=======
+
+ */
+>>>>>>> main

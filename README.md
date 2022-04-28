@@ -1,5 +1,5 @@
 # WhoAmI
- Text-Based Adventure Game Collaboration Between: Dalton Hodkiewicz, Vivian Gomez, Kyler Lambert
+ Text-Based Adventure Game Collaboration Between: Dalton Hodkiewicz, Vivian Gomez
 
 Goals for Team:
 --

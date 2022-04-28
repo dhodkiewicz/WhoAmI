@@ -5,6 +5,7 @@ package item;
 
 import java.awt.Point;
 
+<<<<<<< HEAD
 public class Item
 {	
 	private Point location;			// The location of the item.
@@ -34,10 +35,25 @@ public class Item
 	 * @param type
 	 * @param location
 	 */
+=======
+
+public class Item {
+
+	private Point location;
+	private itemType type; //private variable for holding itemtype
+
+	public enum itemType{healthPotion,longsword,shortsword,axe,knife,flashlight,key,map} // enum that holds our types
+
+	public Item() {
+
+	}
+
+>>>>>>> main
 	public Item(itemType type, Point location) {
 		this.type = type;
 		this.location = location;
 	}
+<<<<<<< HEAD
 	
 	// Getter for itemType
 	public itemType getType()
@@ -54,15 +70,40 @@ public class Item
 	// Getter for item location
 	public Point getLocation()
 	{
+=======
+
+	//getter for itemtype
+	public itemType getType() {
+		return type;
+	}
+
+	//setter for itemtype
+	public void setType(itemType type) {
+		this.type = type;
+	}
+
+	//getter for item location
+	public Point getLocation() {
+>>>>>>> main
 		return location;
 	}
-	
+
 	// Setter for item location
 	public void setLocation(Point location)
 	{
 		this.location = location;
 	}
+<<<<<<< HEAD
 	
+=======
+
+	//return all item types
+	public static itemType[] getAllItemTypes() {
+		return itemType.values();
+	}
+
+
+>>>>>>> main
 	// Getter for item description.
 	public String getItemDescription()
 	{
@@ -74,6 +115,7 @@ public class Item
 	{
 		this.itemDescription = itemDesc;
 	}
+<<<<<<< HEAD
 	
 	//return all item types
 	public static itemType[] getAllItemTypes() {
@@ -116,12 +158,16 @@ public class Item
 
 	
 	
+=======
+
+
+>>>>>>> main
 	// -------------------------
 	//    COME BACK TO THIS.
 	// -------------------------
 	@Override
 	public String toString()
-	{	
+	{
 		return itemDescription.toString();
 	}
 }
