@@ -4,13 +4,29 @@ import java.awt.Point;
 
 public class HealthPotion extends Item {
 
-	public HealthPotion() {
-		// TODO Auto-generated constructor stub
+	private int healthPoints = 100;
+	private final String type ="Health Potion";
+	
+	public HealthPotion(int id) {
+		super(id);
 	}
 
-	public HealthPotion(itemType type, Point location) {
-		super(type, location);
-		// TODO Auto-generated constructor stub
+	public HealthPotion(Point location, int id) {
+		super(location,id);
+	}
+		
+	
+
+	public int getHealthPoints() {
+		return healthPoints;
+	}
+
+	public void setHealthPoints(int healthPoints) {
+		this.healthPoints = healthPoints;
+	}
+
+	public String getType() {
+		return type;
 	}
 
 }

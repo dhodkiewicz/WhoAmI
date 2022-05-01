@@ -6,31 +6,32 @@ package item;
 import java.awt.Point;
 
 
+
 public class Item {
 
 	private Point location;
-	private itemType type; //private variable for holding itemtype
+//	private itemType type; //private variable for holding itemtype
 
-	public enum itemType{healthPotion,longsword,shortsword,axe,knife,flashlight,key,map} // enum that holds our types
+	private double weightInOz; // weight in ounces (capacity purposes)
+	private String description; // description for the items
+	private int roomId;
 
-	public Item() {
+	
+	
+	
 
+	public Item(int id) {
+		this.roomId = id;
 	}
 
-	public Item(itemType type, Point location) {
-		this.type = type;
+	public Item(Point location, int id) {
 		this.location = location;
+		this.roomId = id;
 	}
 
-	//getter for itemtype
-	public itemType getType() {
-		return type;
-	}
 
-	//setter for itemtype
-	public void setType(itemType type) {
-		this.type = type;
-	}
+
+
 
 	//getter for item location
 	public Point getLocation() {
@@ -43,31 +44,32 @@ public class Item {
 		this.location = location;
 	}
 
-	//return all item types
-	public static itemType[] getAllItemTypes() {
-		return itemType.values();
+
+	public double getOz() {
+		return weightInOz;
 	}
 
-
-	// Getter for item description.
-	public String getItemDescription()
-	{
-		return itemDescription;
+	public void setOz(double oz) {
+		this.weightInOz = oz;
 	}
 
-	// Setter for item description.
-	public void setItemDescription(String itemDesc)
-	{
-		this.itemDescription = itemDesc;
+	public String getDescription() {
+		return description;
 	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-	// -------------------------
-	//    COME BACK TO THIS.
-	// -------------------------
-	@Override
-	public String toString()
-	{
-		return itemDescription.toString();
+	public int getRoomId() {
+		return roomId;
+	}
+
+	public void setRoomId(int roomId) {
+		this.roomId = roomId;
+	}
+	
+	public String getType() throws CloneNotSupportedException {
+		return this.clone().toString();
 	}
 }

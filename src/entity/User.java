@@ -2,11 +2,15 @@ package entity;
 
 import java.awt.Point;
 
+import item.Item;
+
 public class User {
 
 	private Point location;
 	private String Name;
 	private int currentRoom;
+	private static Backpack backpack;
+	private static Item equippedWeapon;
 	
 	public User() {
 		
@@ -40,6 +44,22 @@ public class User {
 	//setter for users current room
 	public void setCurrentRoom(int currentRoom) {
 		this.currentRoom = currentRoom;
+	}
+
+	public static Backpack getBackpack() {
+		return backpack;
+	}
+
+	public static void setBackpack(Backpack backpack) {
+		User.backpack = backpack;
+	}
+
+	public static Item getEquippedWeapon() {
+		return equippedWeapon;
+	}
+
+	public static void setEquippedWeapon(Item equippedWeapon) {
+		User.equippedWeapon = equippedWeapon;
 	}
 
 }

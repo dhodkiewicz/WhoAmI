@@ -2,6 +2,7 @@ package game;
 
 import java.util.Scanner;
 
+import entity.User;
 import item.Item;
 
 
@@ -17,7 +18,7 @@ public class Main {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws CloneNotSupportedException {
 		Game game = new Game();
 		
 		for(Room r: game.getRooms()) {
@@ -33,28 +34,16 @@ public class Main {
 			 * define amount of Rooms upon instantiation and logic }
 			 */
 		}
+		
 		Scanner in = new Scanner(System.in);
 		while(!game.isGameOver()) {
 			System.out.println("Please enter a command: " + "\n");
 			String s = in.nextLine();
 			game.determineMove(s);
 			
-			Item i = game.isUserNearItem();
-			if (isUserNearItem(i)) {
-				//TODO ask player if they would like to pick up the item and infer logic
-				System.out.println("User is near a " + i.getType() + " would you like to pick it up?");
-			}
-			
 		}
 		in.close();
 	}
 
-	public static boolean isUserNearItem(Item i){
-		if(i == null)
-		return false;
-		else {
-			return true;
-		}
-		
-	}
+
 }
