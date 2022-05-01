@@ -2,10 +2,6 @@ package game;
 
 import java.util.Scanner;
 
-import entity.User;
-import item.Item;
-
-
 
 
 /*
@@ -28,7 +24,6 @@ public class Main {
 			System.out.println("Ending Door: " +r.getEndingDoor());
 			System.out.println("Printing dimensions: " + r.getDimensions());
 			System.out.println("Print user current location: " + game.getUser().getLocation());
-
 		}
 		
 		Scanner in = new Scanner(System.in);

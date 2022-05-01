@@ -38,8 +38,7 @@ public class Room {
 		dimensions.y = randomValue; // set the dimensions for y
 		
 		populateRoomCoordinates(); // populate room coordinates upon instantiation
-//		populateRoomItems(id); // populate the rooms items
-		createRoomOneItems(id);
+		createRoomItems(id);
 		
 	}
 	
@@ -113,10 +112,9 @@ public class Room {
 		y = this.dimensions.y / 2; // setting y coordinate to be half the rooms dimension on y axis- so doors will be in the middle of room y- axis wall
 		x = this.dimensions.x - 1; // this will set the x coordinate for the end door to the farthest right of the room (in theory)
 		door = new Point(x,y);
-		this.endingDoor = door; // now set ending door
-		
-		
+		this.endingDoor = door; // now set ending door		
 	}
+	
 
 	// retrieve the rooms coordinates
 	public List <Point> getRoomCoordinates() {
@@ -136,26 +134,7 @@ public class Room {
 		this.roomCoordinates = tempCoordinates; // set property with temporary coordinates
 	}
 	
-	//method for instantiating rooms and their items
-	public void populateRoomItems(int id) {
-			Item item = new Item(id); // generic item for method (won't be used)
-			List<Item> roomItems = new ArrayList<Item>(); // temporary list to hold generated items
-			List<Point>coordinates = getRoomCoordinates(); // get the rooms coordinates
-//			itemType[] itemTypes = item.getAllItemTypes(); // get all of the item types
-			
-					
-//			for(itemType t: itemTypes) { // loop through all item types
-//				int randomValue = (int)Math.floor(Math.random()*(getRoomCoordinates().size())); // random value between 0 and room coords max length
-//				Point p = coordinates.get(randomValue); // set a point equal to the random value index of the rooms coordinates
-//				Item i = new Item(t, p, id); //create new item passing type and point
-//				roomItems.add(i); // add the item
-//
-//			}
-			
-			this.setRoomItems(roomItems);
-	}
 	
-
 	public List<Item> getRoomItems() {
 		return roomItems;
 	}
@@ -164,7 +143,7 @@ public class Room {
 		this.roomItems = roomItems;
 	}
 
-	public void createRoomOneItems(int id) {
+	public void createRoomItems(int id) {
 		HealthPotion hp = new HealthPotion(id);
 		Axe axe = new Axe(id);
 		Longsword ls = new Longsword(id);

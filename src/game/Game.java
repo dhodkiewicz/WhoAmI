@@ -66,29 +66,6 @@ public class Game implements Command {
 		Game.user = user;
 	}
 
-	@Override
-	public void moveNorth() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void moveSouth() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void moveWest() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void moveEast() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void use() {
@@ -347,6 +324,30 @@ public boolean isItemAWeapon(Item i) throws CloneNotSupportedException {
 		return true;
 	}
 	return false;
+}
+
+@Override
+public void moveNorth() {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void moveSouth() {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void moveWest() {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void moveEast() {
+	// TODO Auto-generated method stub
+	
 }
 
 

@@ -3,7 +3,6 @@ package entity;
 import java.awt.Point;
 
 import item.Axe;
-import item.Item;
 import item.Longsword;
 import item.Shortsword;
 

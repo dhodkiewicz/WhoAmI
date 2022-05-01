@@ -12,7 +12,7 @@ import item.Item;
 
 public class Backpack {
 
-	public static List<Item>backpack = new ArrayList<Item>();
+	public final static List<Item>backpack = new ArrayList<Item>();
 	
 	public void addItem(Item i) {
 		backpack.add(i);

@@ -10,9 +10,7 @@ import java.awt.Point;
 public class Item {
 
 	private Point location;
-//	private itemType type; //private variable for holding itemtype
-
-	private double weightInOz; // weight in ounces (capacity purposes)
+	private double weightInOz; // weight in ounces (capacity purposes) // might not even use
 	private String description; // description for the items
 	private int roomId;
 
