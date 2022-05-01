@@ -24,15 +24,11 @@ public class Main {
 		for(Room r: game.getRooms()) {
 			System.out.println("Room id: " + r.getId());
 			System.out.println("Room coordinates size:" + r.getRoomCoordinates().size());
-			System.out.println("starting Door: " + r.getStartingDoor()); // arbitrary way of setting door locations for now- will work on logic later
+			System.out.println("starting Door: " + r.getStartingDoor());
 			System.out.println("Ending Door: " +r.getEndingDoor());
 			System.out.println("Printing dimensions: " + r.getDimensions());
 			System.out.println("Print user current location: " + game.getUser().getLocation());
-			/*
-			 * for(Point point : r.getRoomCoordinates()) { System.out.println(point); //
-			 * room coordinates populating and instantiating correctly :) Next need to
-			 * define amount of Rooms upon instantiation and logic }
-			 */
+
 		}
 		
 		Scanner in = new Scanner(System.in);

@@ -136,9 +136,11 @@ public class Game implements Command {
 					// so this will always get the next room (will figure out end game logic later)
 					Game.user.setLocation(this.currentRoom.getStartingDoor());
 					System.out.println("you moved into room " + this.currentRoom.getId());
+					return;
 				}
 				else {
 					System.out.println("Sorry you don't have the key for Room " + this.currentRoom.getId());
+					return;
 				}
 			}
 		}
@@ -155,8 +157,8 @@ public class Game implements Command {
 						isItemBetter(i);
 					}
 					else {
-						User.setEquippedWeapon(i);
-						System.out.println("You auto equipped an " + i.getType());
+						Game.user.setEquippedWeapon(i);
+						System.out.println("You auto equipped a " + i.getType());
 					}
 				}
 			}
@@ -282,7 +284,7 @@ public boolean doesUserHaveKeyForEndingDoor() {
 }
 
 public boolean doesUserHaveWeaponEquipped() {
-	if (User.getEquippedWeapon() == null) {
+	if (Game.user.getEquippedWeapon() == null) {
 		return false;
 	}
 	return true;
@@ -291,7 +293,7 @@ public boolean doesUserHaveWeaponEquipped() {
 //get all the points in a bubble around the user
 public List<Point> getPointsAroundUser(){
 	List<Point> points = new ArrayList<Point>();
-	Point p5 = this.user.getLocation();
+	Point p5 = Game.user.getLocation();
 	int x = p5.x;
 	int y = p5.y;
 	
@@ -320,17 +322,19 @@ public List<Point> getPointsAroundUser(){
 }
 
 public void isItemBetter(Item i) {
-	System.out.println("Your current weapon is " + User.getEquippedWeapon().getDescription());
+	System.out.println("Your current weapon is " + ((Item) Game.user.getEquippedWeapon()).getDescription());
 	System.out.println("Would you like to replace it with " + i.getDescription() + "? y/n");
 	Scanner in = new Scanner(System.in);
 	String string = in.nextLine();
 	if(string.equals("y")) {
-		User.setEquippedWeapon(i);
+		Game.user.setEquippedWeapon(i);
 		this.currentRoom.getRoomItems().remove(i);
-		System.out.println("you equipped " + i.getDescription());
+		System.out.println("you equipped " + i.getDescription() + " with an attack of " + Game.user.getWeaponStats());
+		return;
 	}
 	if(string.equals("n")) {
-		System.out.println("You kept your " + User.getEquippedWeapon().getDescription());
+		System.out.println("You kept your " + ((Item) Game.user.getEquippedWeapon()).getDescription());
+		return;
 	}
 	
 	else {

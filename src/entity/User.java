@@ -2,15 +2,18 @@ package entity;
 
 import java.awt.Point;
 
+import item.Axe;
 import item.Item;
+import item.Longsword;
+import item.Shortsword;
 
-public class User {
+public class User<T> {
 
 	private Point location;
 	private String Name;
 	private int currentRoom;
 	private static Backpack backpack;
-	private static Item equippedWeapon;
+	private T equippedWeapon;
 	
 	public User() {
 		
@@ -54,12 +57,30 @@ public class User {
 		User.backpack = backpack;
 	}
 
-	public static Item getEquippedWeapon() {
-		return equippedWeapon;
+	public T getEquippedWeapon() {
+		return this.equippedWeapon;
 	}
 
-	public static void setEquippedWeapon(Item equippedWeapon) {
-		User.equippedWeapon = equippedWeapon;
+	public void setEquippedWeapon(T equippedWeapon) {
+		this.equippedWeapon = equippedWeapon;
+	}
+	
+	public double getWeaponStats() {
+		
+		if (this.equippedWeapon instanceof Axe) {
+			Axe a = (Axe) this.equippedWeapon;
+			return a.getAttack();
+		}
+		if (this.equippedWeapon instanceof Shortsword) {
+			Shortsword sw = (Shortsword) this.equippedWeapon;
+			return sw.getAttack();
+		}
+		if (this.equippedWeapon instanceof Longsword) {
+			Longsword sw = (Longsword) this.equippedWeapon;
+			return sw.getAttack();
+		}
+		
+		return 0.0;
 	}
 
 }
