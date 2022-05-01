@@ -15,9 +15,6 @@ public class Item {
 	private int roomId;
 
 	
-	
-	
-
 	public Item(int id) {
 		this.roomId = id;
 	}
@@ -26,10 +23,6 @@ public class Item {
 		this.location = location;
 		this.roomId = id;
 	}
-
-
-
-
 
 	//getter for item location
 	public Point getLocation() {

@@ -15,7 +15,7 @@ public class User<T> {
 	private T equippedWeapon;
 	
 	public User() {
-		
+
 	}
 
 	//getter for users location(Point <x,y>)
