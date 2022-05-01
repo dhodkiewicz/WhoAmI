@@ -11,7 +11,7 @@ public interface Command {
 	public void use();
 	public void grab();
 	
-	public void determineMove(String s);
+	public void determineMove(String s) throws CloneNotSupportedException;
 	
 
 

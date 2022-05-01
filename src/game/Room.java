@@ -4,8 +4,14 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import entity.Npc;
+import item.Axe;
+import item.Flashlight;
+import item.HealthPotion;
 import item.Item;
-import item.Item.itemType;
+
+import item.Key;
+import item.Longsword;
+import item.Shortsword;
 
 public class Room {
 	
@@ -18,7 +24,9 @@ public class Room {
 	private int id; // room id for tracking which room the user is currently in (allows us to still use the point obj instead of having to make a <a,b,c> type class
 	private List<Item>roomItems; // field for holding the list of items in the room
 	
-	public Room() { // the rooms constructor
+	
+	public Room(int id) { // the rooms constructor
+		this.id = id;
 		final int upper_bound = 40; // set upper bound for x axis and y axis of room
 		final int lower_bound = 30; // set lower bound for x axis and y axis
 		
@@ -30,7 +38,7 @@ public class Room {
 		dimensions.y = randomValue; // set the dimensions for y
 		
 		populateRoomCoordinates(); // populate room coordinates upon instantiation
-		populateRoomItems(); // populate the rooms items
+		createRoomItems(id);
 		
 	}
 	
@@ -104,10 +112,9 @@ public class Room {
 		y = this.dimensions.y / 2; // setting y coordinate to be half the rooms dimension on y axis- so doors will be in the middle of room y- axis wall
 		x = this.dimensions.x - 1; // this will set the x coordinate for the end door to the farthest right of the room (in theory)
 		door = new Point(x,y);
-		this.endingDoor = door; // now set ending door
-		
-		
+		this.endingDoor = door; // now set ending door		
 	}
+	
 
 	// retrieve the rooms coordinates
 	public List <Point> getRoomCoordinates() {
@@ -127,26 +134,7 @@ public class Room {
 		this.roomCoordinates = tempCoordinates; // set property with temporary coordinates
 	}
 	
-	//method for instantiating rooms and their items
-	public void populateRoomItems() {
-			Item item = new Item(); // generic item for method (won't be used)
-			List<Item> roomItems = new ArrayList<Item>(); // temporary list to hold generated items
-			List<Point>coordinates = getRoomCoordinates(); // get the rooms coordinates
-			itemType[] itemTypes = item.getAllItemTypes(); // get all of the item types
-			
-					
-			for(itemType t: itemTypes) { // loop through all item types
-				int randomValue = (int)Math.floor(Math.random()*(getRoomCoordinates().size())); // random value between 0 and room coords max length
-				Point p = coordinates.get(randomValue); // set a point equal to the random value index of the rooms coordinates
-				Item i = new Item(t, p); //create new item passing type and point
-				roomItems.add(i); // add the item
-
-			}
-			
-			this.setRoomItems(roomItems);
-	}
 	
-
 	public List<Item> getRoomItems() {
 		return roomItems;
 	}
@@ -155,6 +143,35 @@ public class Room {
 		this.roomItems = roomItems;
 	}
 
+	public void createRoomItems(int id) {
+		HealthPotion hp = new HealthPotion(id);
+		Axe axe = new Axe(id);
+		Longsword ls = new Longsword(id);
+		Shortsword sw = new Shortsword(id);
+		Flashlight fl = new Flashlight(id);
+		Key key = new Key(id);
+		
+		
+		this.roomItems = new ArrayList<Item>();
+		
+		this.roomItems.add(hp); //
+		this.roomItems.add(axe);
+		this.roomItems.add(ls);
+		this.roomItems.add(sw);
+		this.roomItems.add(fl);
+		this.roomItems.add(key);
+		
+		for(Item i: this.roomItems) {
+			List<Point>coordinates = getRoomCoordinates(); // get the rooms coordinates
+			int randomValue = (int)Math.floor(Math.random()*(getRoomCoordinates().size())); // random value between 0 and room coords max length
+			Point p = coordinates.get(randomValue); // set a point equal to the random value index of the rooms coordinates
+			i.setLocation(p);
+			System.out.println(i.getClass());
+		}
+		
+		System.out.println("Here");
+	}
+	
 
 
 }
