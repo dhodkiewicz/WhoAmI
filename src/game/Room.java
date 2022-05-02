@@ -3,7 +3,6 @@ package game;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import entity.Npc;
 import item.Axe;
 import item.Flashlight;
 import item.HealthPotion;
@@ -12,6 +11,8 @@ import item.Item;
 import item.Key;
 import item.Longsword;
 import item.Shortsword;
+
+import NPC.Npc;
 
 public class Room {
 	

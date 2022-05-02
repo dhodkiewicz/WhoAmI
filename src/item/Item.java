@@ -1,4 +1,5 @@
-* This class represents an item that can be used by the user/player.
+/**
+ * This class represents an item that can be used by the user/player.
  */
 package item;
 
