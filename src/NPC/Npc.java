@@ -1,19 +1,26 @@
 /**
- * This class represents a npc that will be randomly placed in a room for battle.
+ * This class represents a NPC that will be randomly placed in a room for battle.
  */
 package NPC;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-public class Npc {
+import java.util.Random;
+
+import entity.User;
+import game.Battle;
+
+public class Npc implements Battle{
 
 	private Point location; 		// The location of the NPC.
 	private String description; 	// The description of the NPC.
 	private String message; 		// The message and NPC gives.
 	private int roomID; 			// The room ID where the NPC is located.
-	private double attack; 			// The attack level of the NPC.
+	private double attack; 			// The amount of health user loses when hit by NPC.
+	private double health;			// The NPCs health.
 	private List<Point> hitPoints; 	// The hit points. (When user steps in one, it will have to battle NPC.)
-
+	private Random rand = new Random();	// Random variable to generate a random attack in battle.
+	
 	/**
 	 * Constructor - Set the roomID of the NPC.
 	 * 
@@ -24,8 +31,8 @@ public class Npc {
 	}
 
 	/**
-	 * Constructor - sets roomID and location of an NPC. 1.3 - Use of overloaded
-	 * method/constructor.
+	 * Constructor - sets roomID and location of an NPC.
+	 * 			1.3 - Use of overloaded method/constructor.
 	 * 
 	 * @param id
 	 * @param location
@@ -84,8 +91,43 @@ public class Npc {
 	public void setAttack(double attack) {
 		this.attack = attack;
 	}
+	
+	// Get random.
+	public Random getRand() {
+		return rand;
+	}
+	
+	// Gets the health of the NPC.
+	public double getHealth() {
+		return health;
+	}
 
-	// Gets the hitpoints in a bubble around the NPC.
+	// Sets the health of the NPC.
+	public void setHealth(double health) {
+		this.health = health;
+	}
+
+	/**
+	 *  Check if user is near the NPC.
+	 * @param userLocation
+	 * @return boolean
+	 */
+	public boolean isUserNearNpc(Point userLocation) {
+		// Loop through hit points.
+		for (Point p : getHitPoints()) {
+			// If user location matches hit point, return true.
+			if ((userLocation.x == p.x) && (userLocation.y == p.y)) {
+				return true;
+			}
+		}
+		return false;	// Return false if user location is not on a hit point.
+	}
+	
+
+	/**
+	 *  Gets the hit points in a bubble around the NPC.
+	 * @return hitPoints
+	 */
 	public List<Point> getHitPoints() {
 		hitPoints = new ArrayList<Point>();		// List of the NPC hit points.
 		Point npcLocation = this.getLocation();	// The NPC current location.
@@ -111,9 +153,61 @@ public class Npc {
 		hitPoints.add(p7);
 		hitPoints.add(p8);
 		
-		return hitPoints;
+		return hitPoints;	// Return list of hit points.
 	}
-	
-	
-	
+
+	@Override
+	public void battle(User u) {
+		double userMinAttack = u.getWeaponStats() / 2;	// The minimum attack a user can make.
+		double knightMinAttack = getAttack() / 2;		// The minimum attack a knight can make.
+		
+		do {
+			// Get random values for the user and NPC attack.
+			double userAttack = Math.round(getRand().nextDouble(userMinAttack, u.getWeaponStats()) * 100.0) / 100.0;
+			double knightAttack = Math.round(getRand().nextDouble(knightMinAttack, getAttack()) * 100.0) / 100.0;
+			int randMiss = (int)Math.floor(Math.random()*(10-0+1)+ 0);	// Random number to check if it's a miss.
+			
+			// User misses when randMiss is 3.
+			if (randMiss == 3) {
+				System.out.println("User misses!");
+			} else {
+				setHealth(getHealth() - userAttack);
+				System.out.println("Npc hit! The user deals " + userAttack + " damage!");
+			}
+
+			randMiss = (int)Math.floor(Math.random()*(10-0+1)+ 0);
+			
+			// NPC misses when randMiss is 7.
+			if (randMiss == 7) {
+				System.out.println("The npc missed!");
+			} else {
+				u.setHealth(u.getHealth() - knightMinAttack);
+				System.out.println("User hit! The npc deals " + knightMinAttack + " damage!");
+			}
+
+			System.out.println();	// Print new line for readability.
+
+		} while (checkForWinner(u) == false);	//Loop as long as there's no winner.
+		
+	}
+
+	@Override
+	public boolean checkForWinner(User u) {
+		// Check if user or NPC ran out of health.
+		if (getHealth() <= 0 || u.getHealth() <= 0) {
+			// If NPC health is out, user wins.
+			if (getHealth() <= 0) {
+			//	win();
+				return true;
+			}
+			// If user health is out, NPC wins.
+			if (u.getHealth() <= 0) {
+			//	lose();
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 }
