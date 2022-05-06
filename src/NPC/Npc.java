@@ -197,17 +197,29 @@ public class Npc implements Battle{
 		if (getHealth() <= 0 || u.getHealth() <= 0) {
 			// If NPC health is out, user wins.
 			if (getHealth() <= 0) {
-			//	win();
+				win();
 				return true;
 			}
 			// If user health is out, NPC wins.
 			if (u.getHealth() <= 0) {
-			//	lose();
+				lose();
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	@Override
+	public void lose() {
+		System.out.println("Npc wins!");
+		System.out.println("Do you want to continue? (y or n)");
+		
+	}
+
+	@Override
+	public void win() {
+		System.out.println("User wins!");
 	}
 
 }
