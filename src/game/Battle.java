@@ -20,4 +20,15 @@ public interface Battle {
 	 */
 	public abstract boolean checkForWinner(User u);
 
+	/**
+	 * This method is called when the user loses a battle.
+	 * TODO - This method is unfinished.
+	 */
+	public void lose();
+
+	/**
+	 * This method is called when the user wins a battle.
+	 */
+	public void win();
+
 }
