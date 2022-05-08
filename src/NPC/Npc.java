@@ -8,6 +8,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Supplier;
 
 import entity.User;
 import game.Battle;
@@ -116,7 +117,7 @@ public class Npc implements Battle{
 	 */
 	public boolean isUserNearNpc(Point userLocation) {
 		// Loop through hit points.
-		for (Point p : getHitPoints()) {
+		for (Point p : hitPointsSupplier().get()) {
 			// If user location matches hit point, return true.
 			if ((userLocation.x == p.x) && (userLocation.y == p.y)) {
 				return true;
@@ -128,35 +129,34 @@ public class Npc implements Battle{
 
 	/**
 	 *  Gets the hit points in a bubble around the NPC.
-	 * @return hitPoints
+	 *  		4.2 - Use of a functional interface (1. Supplier)
+	 * @return hitPointsSupplier
 	 */
-	public List<Point> getHitPoints() {
-		// 3.2 - Use of an ArrayList.
-		hitPoints = new ArrayList<Point>();		// List of the NPC hit points.
-		Point npcLocation = this.getLocation();	// The NPC current location.
-		int x = npcLocation.x;					// The x-value of the NPCs current location.
-		int y = npcLocation.y;					// The y-value of the NPCs current location.
+	private Supplier<List<Point>> hitPointsSupplier() {
 		
-		Point p1 = new Point(x+1, y-1);
-		Point p2 = new Point(x+1,y);
-		Point p3 = new Point(x+1, y+1);	// The points to the left of the current x-value point.
-		Point p4 = new Point(x, y+1);
-		Point p5 = new Point(x, y-1);	// The points above and below the current x-value point.
-		Point p6 = new Point(x-1, y-1);
-		Point p7 = new Point(x-1, y);
-		Point p8 = new Point(x-1, y+1);	// The points to the right of the current x-value point.
-		
-		// Add the points to the list.
-		hitPoints.add(p1);
-		hitPoints.add(p2);
-		hitPoints.add(p3); 
-		hitPoints.add(p4);
-		hitPoints.add(p5);
-		hitPoints.add(p6);
-		hitPoints.add(p7);
-		hitPoints.add(p8);
-		
-		return hitPoints;	// Return list of hit points.
+		// Supplier generates the hit points around the NPC.
+		// 2.1 - Use of lambda expressions (1)
+		Supplier<List<Point>> hitPointsSupplier = () -> {
+
+			// 3.2 - Use of an ArrayList.
+			hitPoints = new ArrayList<Point>(); // List of the NPC hit points.
+			Point npcLocation = this.getLocation(); // The NPC current location.
+			int x = npcLocation.x; // The x-value of the NPCs current location.
+			int y = npcLocation.y; // The y-value of the NPCs current location.
+
+			hitPoints.add(new Point(x + 1, y - 1));
+			hitPoints.add(new Point(x + 1, y));
+			hitPoints.add(new Point(x + 1, y + 1)); // The points to the left of the current x-value point.
+			hitPoints.add(new Point(x, y + 1));
+			hitPoints.add(new Point(x, y - 1)); // The points above and below the current x-value point.
+			hitPoints.add(new Point(x - 1, y - 1));
+			hitPoints.add(new Point(x - 1, y));
+			hitPoints.add(new Point(x - 1, y + 1)); // The points to the right of the current x-value point.
+
+			return hitPoints; // Return the list of hit points.
+		};
+
+		return hitPointsSupplier;
 	}
 
 	/**
@@ -168,6 +168,8 @@ public class Npc implements Battle{
 	public void battle(User u) {
 		double userMinAttack = u.getWeaponStats() / 2;	// The minimum attack a user can make.
 		double knightMinAttack = getAttack() / 2;		// The minimum attack a knight can make.
+		
+		System.out.println("====================== START BATTLE ======================");
 		
 		do {
 			// Get random values for the user and NPC attack.
@@ -197,6 +199,7 @@ public class Npc implements Battle{
 
 		} while (checkForWinner(u) == false);	//Loop as long as there's no winner.
 		
+		System.out.println("====================== END BATTLE ======================");
 	}
 
 	/**
@@ -211,7 +214,7 @@ public class Npc implements Battle{
 				win();
 				return true;
 			}
-			// If user health is out, NPC wins.
+			// If user health is out, user loses and NPC wins.
 			if (u.getHealth() <= 0) {
 				lose();
 				return true;
@@ -226,7 +229,7 @@ public class Npc implements Battle{
 	 */
 	@Override
 	public void lose() {
-		System.out.println("Npc wins!");
+		System.out.println("NPC WINS!");
 		
 		// If the user is in room 4, ask if they want to play again.
 		if (getRoomID() == 4) {
@@ -235,8 +238,6 @@ public class Npc implements Battle{
 		else {
 			System.out.println("Do you want to continue? (y or n)");
 		}
-		
-		
 	}
 	
 	/**
@@ -244,7 +245,7 @@ public class Npc implements Battle{
 	 */
 	@Override
 	public void win() {
-		System.out.println("User wins!");
+		System.out.println("USER WINS!");
 	}
 
 }
