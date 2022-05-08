@@ -8,6 +8,7 @@ import java.awt.Point;
 
 public class Knight extends Npc {
 
+	// 1.6 - Proper use of the final keyword.
 	private final String name = "Knight";	// The name of the NPC.
 	private double health = 25;				// The knight's starting health.
 	

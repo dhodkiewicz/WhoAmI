@@ -1,5 +1,6 @@
 /**
- * This functional interface is used to generate a battle.
+ * This interface holds the methods to generate a battle between NPCs and the user.
+ * Note to self: all methods in an interface are public and abstract.
  */
 package game;
 
@@ -11,14 +12,13 @@ public interface Battle {
 	 * Battle method accepts a user that will be used for battle with NPC.
 	 * @param u
 	 */
-	public abstract void battle(User u) ;
+	public void battle(User u) ;
 	
 	/**
 	 * This method is used to check if there's a winner by looking at the user and NPC health.
 	 * @param u
-	 * @return
 	 */
-	public abstract boolean checkForWinner(User u);
+	public boolean checkForWinner(User u);
 
 	/**
 	 * This method is called when the user loses a battle.
