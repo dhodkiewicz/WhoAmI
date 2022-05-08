@@ -1,5 +1,7 @@
 /**
  * This class represents a NPC that will be randomly placed in a room for battle.
+ * 		1.2 - Polymorphic class structure with use of parent classes and interfaces.
+ * 		2.2 - Valid example of encapsulation (Scenario 2 in Item class).
  */
 package NPC;
 import java.awt.Point;
@@ -129,6 +131,7 @@ public class Npc implements Battle{
 	 * @return hitPoints
 	 */
 	public List<Point> getHitPoints() {
+		// 3.2 - Use of an ArrayList.
 		hitPoints = new ArrayList<Point>();		// List of the NPC hit points.
 		Point npcLocation = this.getLocation();	// The NPC current location.
 		int x = npcLocation.x;					// The x-value of the NPCs current location.
@@ -156,6 +159,11 @@ public class Npc implements Battle{
 		return hitPoints;	// Return list of hit points.
 	}
 
+	/**
+	 * This method performs a battle between the user and an NPC.
+	 * 		1.4 - Use of overridden methods.
+	 * 		1.9 - Proper use of @Override notation.
+	 */
 	@Override
 	public void battle(User u) {
 		double userMinAttack = u.getWeaponStats() / 2;	// The minimum attack a user can make.
@@ -191,6 +199,9 @@ public class Npc implements Battle{
 		
 	}
 
+	/**
+	 * This method is used to check if there's a winner based on the remaining health of the user and NPC.
+	 */
 	@Override
 	public boolean checkForWinner(User u) {
 		// Check if user or NPC ran out of health.
@@ -210,13 +221,27 @@ public class Npc implements Battle{
 		return false;
 	}
 
+	/**
+	 * The lose method is called when the user loses a battle against an NPC.
+	 */
 	@Override
 	public void lose() {
 		System.out.println("Npc wins!");
-		System.out.println("Do you want to continue? (y or n)");
+		
+		// If the user is in room 4, ask if they want to play again.
+		if (getRoomID() == 4) {
+			System.out.println("Do you want to play again? (y or n)");
+		}
+		else {
+			System.out.println("Do you want to continue? (y or n)");
+		}
+		
 		
 	}
-
+	
+	/**
+	 * The win method is called when the user wins a battle against an NPC.
+	 */
 	@Override
 	public void win() {
 		System.out.println("User wins!");
