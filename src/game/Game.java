@@ -41,7 +41,7 @@ public class Game implements Command {
 		roomFour.setDoors();
 		rooms.add(roomFour);
 		this.rooms = rooms;
-	
+
 		Command.hello();
 	}
 
@@ -69,7 +69,7 @@ public class Game implements Command {
 	@Override
 	public void use() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
@@ -80,22 +80,22 @@ public class Game implements Command {
 	public void setGameOver(boolean isGameOver) {
 		this.isGameOver = isGameOver;
 	}
-	
+
 
 	@Override
-	public void determineMove() throws Exception{	
-		
-		if(isUserNearDoor()) { nearDoorActivity(); }	
-		
-		Item i = isUserNearItem();	
+	public void determineMove() throws Exception{
+
+		if(isUserNearDoor()) { nearDoorActivity(); }
+
+		Item i = isUserNearItem();
 		if(getItemNearPlayer(i)) { itemInteraction(i); }
-		
+
 		npcAction();
-		
-		genericMessage();		
+
+		genericMessage();
 	}
-	
-	
+
+
 	public static boolean getItemNearPlayer(Item i){
 		if(i == null)
 		return false;
@@ -103,24 +103,24 @@ public class Game implements Command {
 			return true;
 		}
 	}
-	
+
 	public boolean isValidEquipCommand(String s) {
 		if(s == "y" | s == "n") {
 			return true;
 		}
 		return false;
 	}
-	
+
 public void genericMessage() {
 
 	boolean flag = false;
 	boolean doesUserHaveFlashlight = false;
-	
-	
+
+
 	System.out.println("Please enter a command:");
 	Scanner in = new Scanner(System.in);
 	String s = in.nextLine();
-	
+
 	this.getUser();
 	for(Item i : User.getBackpack().getBPContents()) {
 
@@ -132,11 +132,11 @@ public void genericMessage() {
 					System.out.println(e);
 				}
 	}
-	
+
 	if(s.equals("light") && doesUserHaveFlashlight) {
 		System.out.println("I have the light! :)");
 	}
-	
+
 	for (ValidCommands vc: ValidCommands.values()) {
 
 		if(s.equals(vc.getCommand())) {
@@ -148,8 +148,8 @@ public void genericMessage() {
 		 System.out.println(s + " is not a valid command!");
 	}
 }
-	
-	
+
+
 
 public void moveUser(String s) {
 	int xValue;
@@ -169,7 +169,7 @@ public void moveUser(String s) {
 		System.out.println("You moved north");
 	}
 	if(s.equals("move south")){
-		if(yValue == 0) {			
+		if(yValue == 0) {
 			System.out.println("bump, you hit a wall!");
 			return;
 		}
@@ -206,7 +206,7 @@ public void setCurrentRoom(Room currentRoom) {
 
 public Item isUserNearItem() {
 	Room r = getCurrentRoom();
-	
+
 	for(Item i : r.getRoomItems()) {
 		Point p = i.getLocation();
 		for(Point point :getPointsAroundUser()) {
@@ -246,39 +246,39 @@ public void npcAction(){
 		System.out.println(n.getDescription());
 		System.out.println(n.getMessage());
 		System.out.println("User is now locked into battle with the " + n.getName());
-		
+
 		int winner = n.battle(getUser());	// The user is in battle with the NPC and returns an int to determine the winner.
-		
+
 		// User doesn't have equipped weapon.
 		if (winner == 0) {
 			// TODO - Come back to this
 		}
-		
+
 		// User wins if winner variable is 1.
 		if (winner == 1) {
 			n.win();
 			getCurrentRoom().getNpcs().remove(n);
 			// End game here?
 		}
-		
+
 		// User loses if winner variable is 2.
 		if (winner == 2) {
 			n.lose();
 			if(getCurrentRoom().getId() == 4) {
 				System.out.println("Do you want to play again? (y or n)");
 			}
-			
+
 		}
 	}
 }
-		
+
 		/**
 		 *  Check if user is near the NPC.
 		 * @param userLocation
 		 * @return boolean
 		 */
 		public Npc isUserNearNpc(Point userLocation) {
-			
+
 			for(Npc npc : this.currentRoom.getNpcs()) {
 				for(Point p : npc.hitPointsSupplier().get()) {
 					if ((userLocation.x == p.x) && (userLocation.y == p.y)) {
@@ -286,11 +286,11 @@ public void npcAction(){
 					}
 				}
 			}
-			
+
 			return null;
 		}
-		
-	
+
+
 
 public boolean isUserNearDoor() {
 	for (Point p: getPointsAroundUser()) {
@@ -299,6 +299,24 @@ public boolean isUserNearDoor() {
 		}
 	}
 	return false;
+}
+
+/**
+ *  Check if user is near the NPC.
+ * @param userLocation
+ * @return boolean
+ */
+public Npc isUserNearNpc(Point userLocation) {
+
+	for(Npc npc : this.currentRoom.getNpcs()) {
+		for(Point p : npc.hitPointsSupplier().get()) {
+			if ((userLocation.x == p.x) && (userLocation.y == p.y)) {
+				return npc;
+			}
+		}
+	}
+
+	return null;
 }
 
 public boolean doesUserHaveKeyForEndingDoor() {
@@ -325,7 +343,7 @@ public List<Point> getPointsAroundUser(){
 	Point p5 = Game.user.getLocation();
 	int x = p5.x;
 	int y = p5.y;
-	
+
 	Point p1 = new Point(x-1, y-1);
 	Point p2 = new Point(x, y-1);
 	Point p3 = new Point(x + 1, y-1);
@@ -334,7 +352,7 @@ public List<Point> getPointsAroundUser(){
 	Point p7 = new Point(x - 1, y + 1);
 	Point p8 = new Point(x, y + 1);
 	Point p9 = new Point(x + 1, y + 1);
-	
+
 	// add them all to the temporary list
 	points.add(p1);
 	points.add(p2);
@@ -345,7 +363,7 @@ public List<Point> getPointsAroundUser(){
 	points.add(p7);
 	points.add(p8);
 	points.add(p9);
-	
+
 	// return the list
 	return points;
 }
@@ -365,7 +383,7 @@ public void isItemBetter(Item i) {
 		System.out.println("You kept your " + ((Item) Game.user.getEquippedWeapon()).getDescription());
 		return;
 	}
-	
+
 	else {
 		isItemBetter(i);
 	}
