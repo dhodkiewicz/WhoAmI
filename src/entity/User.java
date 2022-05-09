@@ -11,7 +11,7 @@ public class User<T> {
 	private Point location;
 	private String Name;
 	private int currentRoom;
-	private double health;
+	private double health = 75;
 	private static Backpack backpack;
 	private T equippedWeapon;
 	
