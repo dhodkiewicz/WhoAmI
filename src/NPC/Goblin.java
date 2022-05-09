@@ -8,12 +8,13 @@ import java.awt.Point;
 
 public class Goblin extends Npc {
 
-	private final String name = "Goblin";	// The name of the NPC.
+	//private final String name = "Goblin";	// The name of the NPC.
 	private double health = 20;				// The goblin's starting health.
 	
 	// Constructor - accepts a room ID.
 	public Goblin(int id) {
 		super(id);
+		this.setName("Goblin");
 		
 		// Determine the roomID of the goblin and set it's details.
 		if (id == 1) {
@@ -48,8 +49,8 @@ public class Goblin extends Npc {
 	}
 	
 	// Gets the name of this type of NPC.
-	public String getName() {
-		return name;
-	}
+	//public String getName() {
+	//	return name;
+	//}
 
 }

@@ -12,13 +12,13 @@ public interface Battle {
 	 * Battle method accepts a user that will be used for battle with NPC.
 	 * @param u
 	 */
-	public void battle(User u) ;
+	public int battle(User u) ;
 	
 	/**
 	 * This method is used to check if there's a winner by looking at the user and NPC health.
 	 * @param u
 	 */
-	public boolean checkForWinner(User u);
+	public int checkForWinner(User u);
 
 	/**
 	 * This method is called when the user loses a battle.
