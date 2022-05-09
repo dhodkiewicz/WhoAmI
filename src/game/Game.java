@@ -19,8 +19,6 @@ public class Game implements Command {
 	private static User user; //field for our user
 	private boolean isGameOver; //field to check if game is over or not
 
-
-	
 	public Game() throws CloneNotSupportedException { // constructor for game will autopopulate rooms (for now) -- next will establish method(s) to link doors/rooms together
 		this.setGameOver(false);
 		User user = new User();
@@ -43,8 +41,8 @@ public class Game implements Command {
 		roomFour.setDoors();
 		rooms.add(roomFour);
 		this.rooms = rooms;
-	
-	
+
+		Command.hello();
 	}
 
 	//getter for rooms
@@ -71,16 +69,9 @@ public class Game implements Command {
 	@Override
 	public void use() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	@Override
-	public void grab() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
 
 	public boolean isGameOver() {
 		return isGameOver;
@@ -89,106 +80,22 @@ public class Game implements Command {
 	public void setGameOver(boolean isGameOver) {
 		this.isGameOver = isGameOver;
 	}
-	
-	   public static void promptEnterKey(){
-	        System.out.println("Press \"ENTER\" to continue...");
-	        System.out.println();
-	        System.out.println();
-	        try {
-	            int read = System.in.read(new byte[2]);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	    }
+
 
 	@Override
-	public void determineMove(String s) throws CloneNotSupportedException {
-		
-		Scanner in = new Scanner(System.in);
-		if(isUserNearDoor()) {
-			System.out.println("User is near the ending door, would you like to go through? y/n");
-			String string = in.nextLine();
-			if(string.equals("y")) {
-				if(doesUserHaveKeyForEndingDoor()) {
-					this.currentRoom = getRooms().get(this.currentRoom.getId()); // get the room from rooms list (at index) which will be the next room because index values started at 1
-					// so this will always get the next room (will figure out end game logic later)
-					Game.user.setLocation(this.currentRoom.getStartingDoor());
-					System.out.println("you moved into room " + this.currentRoom.getId());
-					return;
-				}
-				else {
-					System.out.println("Sorry you don't have the key for Room " + this.currentRoom.getId());
-					return;
-				}
-			}
-		}
-		
+	public void determineMove() throws Exception{
+
+		if(isUserNearDoor()) { nearDoorActivity(); }
+
 		Item i = isUserNearItem();
-		if(getItemNearPlayer(i)) {
-			System.out.println("User is near a " + i.getType() + " would you like to pick it up? Enter y/n");
-			if(s.equals("y")) {
-				User.getBackpack().addItem(i);
-				getCurrentRoom().getRoomItems().remove(i);
-				System.out.println("You picked up a " + i.getType());
-				if(isItemAWeapon(i)) {
-					if(doesUserHaveWeaponEquipped()) {
-						isItemBetter(i);
-					}
-					else {
-						Game.user.setEquippedWeapon(i);
-						System.out.println("You auto equipped a " + i.getType());
-					}
-				}
-			}
-		}
-		
-		// Check if user is near a NPC.
-		Npc n = isUserNearNpc(this.getUser().getLocation());
-		if (n != null) {
-			System.out.println(n.getDescription());
-			System.out.println(n.getMessage());
-			System.out.println("User is now locked into battle with the " + n.getName());
-			
-			int winner = n.battle(getUser());	// The user is in battle with the NPC and returns an int to determine the winner.
-			
-			// User doesn't have equipped weapon.
-			if (winner == 0) {
-				// TODO - Come back to this
-			}
-			
-			// User wins if winner variable is 1.
-			if (winner == 1) {
-				n.win();
-				getCurrentRoom().getNpcs().remove(n);
-				// End game here?
-			}
-			
-			// User loses if winner variable is 2.
-			if (winner == 2) {
-				n.lose();
-				if(getCurrentRoom().getId() == 4) {
-					System.out.println("Do you want to play again? (y or n)");
-				}
-				
-			}
-			
-		}
-		
-		boolean flag = false;
-		for (ValidCommands vc: ValidCommands.values()) {
-			if(s.equals(vc.getCommand())) {
-				flag = true;
-				moveUser(s);
-				return;
-			}
-			if (!flag) {
-				/* System.out.println("Not a valid command"); */
-			}
-		}
-		
-		
+		if(getItemNearPlayer(i)) { itemInteraction(i); }
+
+		npcAction();
+
+		genericMessage();
 	}
-	
+
+
 	public static boolean getItemNearPlayer(Item i){
 		if(i == null)
 		return false;
@@ -196,15 +103,53 @@ public class Game implements Command {
 			return true;
 		}
 	}
-	
+
 	public boolean isValidEquipCommand(String s) {
 		if(s == "y" | s == "n") {
 			return true;
 		}
 		return false;
 	}
-	
-	
+
+public void genericMessage() {
+
+	boolean flag = false;
+	boolean doesUserHaveFlashlight = false;
+
+
+	System.out.println("Please enter a command:");
+	Scanner in = new Scanner(System.in);
+	String s = in.nextLine();
+
+	this.getUser();
+	for(Item i : User.getBackpack().getBPContents()) {
+
+				try {
+					if(i.getType().equals("Flashlight")) {
+					doesUserHaveFlashlight = true;
+					}
+				} catch (CloneNotSupportedException e) {
+					System.out.println(e);
+				}
+	}
+
+	if(s.equals("light") && doesUserHaveFlashlight) {
+		System.out.println("I have the light! :)");
+	}
+
+	for (ValidCommands vc: ValidCommands.values()) {
+
+		if(s.equals(vc.getCommand())) {
+			flag = true;
+			moveUser(s);
+		}
+	}
+	if (!flag) {
+		 System.out.println(s + " is not a valid command!");
+	}
+}
+
+
 
 public void moveUser(String s) {
 	int xValue;
@@ -224,7 +169,7 @@ public void moveUser(String s) {
 		System.out.println("You moved north");
 	}
 	if(s.equals("move south")){
-		if(yValue == 0) {			
+		if(yValue == 0) {
 			System.out.println("bump, you hit a wall!");
 			return;
 		}
@@ -261,7 +206,7 @@ public void setCurrentRoom(Room currentRoom) {
 
 public Item isUserNearItem() {
 	Room r = getCurrentRoom();
-	
+
 	for(Item i : r.getRoomItems()) {
 		Point p = i.getLocation();
 		for(Point point :getPointsAroundUser()) {
@@ -273,6 +218,80 @@ public Item isUserNearItem() {
 	return null;
 }
 
+public void itemInteraction(Item i) throws Exception {
+	System.out.println("User is near a " + i.getType() + " would you like to pick it up? Enter y/n");
+	Scanner in = new Scanner(System.in);
+	String s = in.nextLine();
+	if(s.equals("y")) {
+		User.getBackpack().addItem(i);
+		getCurrentRoom().getRoomItems().remove(i);
+		System.out.println("You picked up a " + i.getType());
+		if(isItemAWeapon(i)) {
+			if(doesUserHaveWeaponEquipped()) {
+				isItemBetter(i);
+			}
+			else {
+				Game.user.setEquippedWeapon(i);
+				System.out.println("You auto equipped a " + i.getType());
+				return;
+			}
+		}
+	}
+}
+
+public void npcAction(){
+	// Check if user is near a NPC.
+	Npc n = isUserNearNpc(this.getUser().getLocation());
+	if (n != null) {
+		System.out.println(n.getDescription());
+		System.out.println(n.getMessage());
+		System.out.println("User is now locked into battle with the " + n.getName());
+
+		int winner = n.battle(getUser());	// The user is in battle with the NPC and returns an int to determine the winner.
+
+		// User doesn't have equipped weapon.
+		if (winner == 0) {
+			// TODO - Come back to this
+		}
+
+		// User wins if winner variable is 1.
+		if (winner == 1) {
+			n.win();
+			getCurrentRoom().getNpcs().remove(n);
+			// End game here?
+		}
+
+		// User loses if winner variable is 2.
+		if (winner == 2) {
+			n.lose();
+			if(getCurrentRoom().getId() == 4) {
+				System.out.println("Do you want to play again? (y or n)");
+			}
+
+		}
+	}
+}
+
+		/**
+		 *  Check if user is near the NPC.
+		 * @param userLocation
+		 * @return boolean
+		 */
+		public Npc isUserNearNpc(Point userLocation) {
+
+			for(Npc npc : this.currentRoom.getNpcs()) {
+				for(Point p : npc.hitPointsSupplier().get()) {
+					if ((userLocation.x == p.x) && (userLocation.y == p.y)) {
+						return npc;
+					}
+				}
+			}
+
+			return null;
+		}
+
+
+
 public boolean isUserNearDoor() {
 	for (Point p: getPointsAroundUser()) {
 		if(p.equals(this.currentRoom.getEndingDoor())) {
@@ -282,23 +301,6 @@ public boolean isUserNearDoor() {
 	return false;
 }
 
-/**
- *  Check if user is near the NPC.
- * @param userLocation
- * @return boolean
- */
-public Npc isUserNearNpc(Point userLocation) {
-	
-	for(Npc npc : this.currentRoom.getNpcs()) {
-		for(Point p : npc.hitPointsSupplier().get()) {
-			if ((userLocation.x == p.x) && (userLocation.y == p.y)) {
-				return npc;
-			}
-		}
-	}
-	
-	return null;
-}
 
 public boolean doesUserHaveKeyForEndingDoor() {
 	for(Item i: User.getBackpack().getBPContents()) {
@@ -324,7 +326,7 @@ public List<Point> getPointsAroundUser(){
 	Point p5 = Game.user.getLocation();
 	int x = p5.x;
 	int y = p5.y;
-	
+
 	Point p1 = new Point(x-1, y-1);
 	Point p2 = new Point(x, y-1);
 	Point p3 = new Point(x + 1, y-1);
@@ -333,7 +335,7 @@ public List<Point> getPointsAroundUser(){
 	Point p7 = new Point(x - 1, y + 1);
 	Point p8 = new Point(x, y + 1);
 	Point p9 = new Point(x + 1, y + 1);
-	
+
 	// add them all to the temporary list
 	points.add(p1);
 	points.add(p2);
@@ -344,7 +346,7 @@ public List<Point> getPointsAroundUser(){
 	points.add(p7);
 	points.add(p8);
 	points.add(p9);
-	
+
 	// return the list
 	return points;
 }
@@ -364,7 +366,7 @@ public void isItemBetter(Item i) {
 		System.out.println("You kept your " + ((Item) Game.user.getEquippedWeapon()).getDescription());
 		return;
 	}
-	
+
 	else {
 		isItemBetter(i);
 	}
@@ -377,28 +379,23 @@ public boolean isItemAWeapon(Item i) throws CloneNotSupportedException {
 	return false;
 }
 
-@Override
-public void moveNorth() {
-	// TODO Auto-generated method stub
-	
-}
-
-@Override
-public void moveSouth() {
-	// TODO Auto-generated method stub
-	
-}
-
-@Override
-public void moveWest() {
-	// TODO Auto-generated method stub
-	
-}
-
-@Override
-public void moveEast() {
-	// TODO Auto-generated method stub
-	
+public void nearDoorActivity() {
+	String msg = "User is near the ending door, would you like to go through? y/n";
+	System.out.println(msg);
+	Scanner in = new Scanner(System.in);
+	String s = in.nextLine();
+	if(s.equals("y")) {
+		if(doesUserHaveKeyForEndingDoor()) {
+			this.currentRoom = getRooms().get(this.currentRoom.getId());
+			Game.user.setLocation(this.currentRoom.getStartingDoor());
+			System.out.println("You moved into room " + this.currentRoom.getId());
+			return;
+		}
+		else {
+			System.out.println("Sorry you don't have the key for Room " + this.currentRoom.getId());
+			return;
+		}
+	}
 }
 
 
