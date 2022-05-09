@@ -20,19 +20,19 @@ public class Goblin extends Npc {
 		if (id == 1) {
 			this.setAttack(4);
 			this.setDescription("A green goblin stands here.");
-			this.setMessage("Be ready for whatever comes at you.");
+			this.setMessage(getName() + ": Be ready for whatever comes at you.");
 			this.setHealth(health - 10);
 		}
 		if (id == 2) {
 			this.setAttack(6);
 			this.setDescription("A goblin with big ears and fangs stands here.");
-			this.setMessage("You have made a mistake stepping on my territory!");
+			this.setMessage(getName() + ": You have made a mistake stepping on my territory!");
 			this.setHealth(health - 5);
 		}
 		if (id == 3) {
 			this.setAttack(8);
 			this.setDescription("A goblin with long claws stands here.");
-			this.setMessage("No enemy's getting past me!");
+			this.setMessage(getName() + ": No enemy's getting past me!");
 			this.setHealth(health);
 		}
 		if (id == 4) {
