@@ -170,19 +170,13 @@ public class Npc implements Battle{
 		double userMinAttack = u.getWeaponStats() / 2;	// The minimum attack a user can make.
 		double knightMinAttack = getAttack() / 2;		// The minimum attack a knight can make.
 		
-		int winner = 0;
-		
-		if (u.getWeaponStats() > 0) {
-			
-	
-		
 		System.out.println("====================== START BATTLE ======================");
 		
 		do {
 			
 			// Get random values for the user and NPC attack.
 			double userAttack = Math.round(getRand().nextDouble(userMinAttack, u.getWeaponStats()) * 100.0) / 100.0;
-			double knightAttack = Math.round(getRand().nextDouble(knightMinAttack, getAttack()) * 100.0) / 100.0;
+			double npcAttack = Math.round(getRand().nextDouble(knightMinAttack, getAttack()) * 100.0) / 100.0;
 			int randMiss = (int)Math.floor(Math.random()*(10-0+1)+ 0);	// Random number to check if it's a miss.
 			
 			// User misses when randMiss is 3.
@@ -199,63 +193,93 @@ public class Npc implements Battle{
 			if (randMiss == 7) {
 				System.out.println("The npc missed!");
 			} else {
-				u.setHealth(u.getHealth() - knightAttack);
-				System.out.println("User hit! The npc deals " + knightAttack + " damage!");
+				u.setHealth(u.getHealth() - npcAttack);
+				System.out.println("User hit! The npc deals " + npcAttack + " damage!");
 			}
 
 			System.out.println();	// Print new line for readability.
 
-		} while (checkForWinner(u) != 0);//(checkForWinner(u) == false);	//Loop as long as there's no winner.
-		
-		if(checkForWinner(u) == 1) {
-			winner = 1;
-		}
-		else if(checkForWinner(u) == 2) {
-			winner = 2;
-		}
-		}
-		
+		} while (checkForWinner(u.getHealth(), getHealth()) == false);	//Loop as long as there's no winner.
 		
 		//System.out.println("====================== END BATTLE ======================");
-		return winner;
+		
+		return getWinner(u);
+	}
+	
+	/**
+	 * This method is used when a user encounters an NPC but does not have a weapon equipped.
+	 */
+	@Override
+	public int streetFight(User u) {
+		// TODO Auto-generated method stub
+		double minAttack = getAttack() / 2; 	// The minimum attack a user can make.
+		double tempUserHealth = getHealth();
+		
+		System.out.println("====================== START BATTLE ======================");
+		do {
+			// Get random values for the user and NPC attack.
+			double userAttack = Math.round(getRand().nextDouble(minAttack, getAttack()) * 100.0) / 100.0;
+			double npcAttack = Math.round(getRand().nextDouble(minAttack, getAttack()) * 100.0) / 100.0;
+			int randMiss = (int) Math.floor(Math.random() * (10 - 0 + 1) + 0); // Random number to check if it's a miss.
+
+			// User misses when randMiss is 3.
+			if (randMiss == 3) {
+				System.out.println("User misses!");
+			} else {
+				setHealth(getHealth() - userAttack);
+				System.out.println("Npc hit! The user deals " + userAttack + " damage!");
+			}
+
+			randMiss = (int) Math.floor(Math.random() * (10 - 0 + 1) + 0);
+
+			// NPC misses when randMiss is 7.
+			if (randMiss == 7) {
+				System.out.println("The npc missed!");
+			} else {
+				tempUserHealth -= npcAttack;
+				System.out.println("User hit! The npc deals " + npcAttack + " damage!");
+			}
+
+			System.out.println(); // Print new line for readability.
+
+		} while (checkForWinner(tempUserHealth, getHealth()) == false); // Loop as long as there's no winner.
+
+		 return getWinner(u);
 	}
 
 	/**
 	 * This method is used to check if there's a winner based on the remaining health of the user and NPC.
 	 */
-//	@Override
-//	public boolean checkForWinner(User u) {
-//		// Check if user or NPC ran out of health.
-//		if (getHealth() <= 0 || u.getHealth() <= 0) {
-//			// If NPC health is out, user wins.
-//			if (getHealth() <= 0) {
-//				win();
-//				return true;
-//			}
-//			// If user health is out, user loses and NPC wins.
-//			if (u.getHealth() <= 0) {
-//				lose();
-//				return true;
-//			}
-//		}
-//
-//		return false;
-//	}
-	
-	public int checkForWinner(User u) {
+	@Override
+	public boolean checkForWinner(double userHealth, double npcHealth) {
 		// Check if user or NPC ran out of health.
-		if (getHealth() <= 0 || u.getHealth() <= 0) {
+		if (npcHealth <= 0 || userHealth <= 0) {
 			// If NPC health is out, user wins.
-			if (getHealth() <= 0) {
-				return 1;
+			if (npcHealth <= 0) {
+				return true;
 			}
 			// If user health is out, user loses and NPC wins.
-			if (u.getHealth() <= 0) {
-				return 2;
+			if (userHealth <= 0) {
+				return true;
 			}
 		}
+		return false;
+	}
 
-		return 0;
+	/**
+	 * This method is used to determine who the winner is.
+	 * @param u
+	 * @return winner
+	 */
+	public int getWinner(User u) {
+		int winner = 0;
+		if(u.getHealth() > getHealth()) {
+			winner = 1; // User wins.
+		}
+		if (u.getHealth() < getHealth()) {
+			winner = 2;	// NPC wins.
+		}
+		return winner;
 	}
 
 	/**
