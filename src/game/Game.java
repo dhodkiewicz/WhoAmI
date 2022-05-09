@@ -92,7 +92,7 @@ public class Game implements Command {
 		
 		npcAction();
 		
-		 genericMessage();		
+		genericMessage();		
 	}
 	
 	
@@ -112,23 +112,41 @@ public class Game implements Command {
 	}
 	
 public void genericMessage() {
+
 	boolean flag = false;
+	boolean doesUserHaveFlashlight = false;
+	
+	
+	System.out.println("Please enter a command:");
 	Scanner in = new Scanner(System.in);
-	System.out.println("Please Enter Movement Command:");
 	String s = in.nextLine();
+	
+	this.getUser();
+	for(Item i : User.getBackpack().getBPContents()) {
+
+				try {
+					if(i.getType().equals("Flashlight")) {
+					doesUserHaveFlashlight = true;
+					}
+				} catch (CloneNotSupportedException e) {
+					System.out.println(e);
+				}
+	}
+	
+	if(s.equals("light") && doesUserHaveFlashlight) {
+		System.out.println("I have the light! :)");
+	}
+	
 	for (ValidCommands vc: ValidCommands.values()) {
 
 		if(s.equals(vc.getCommand())) {
 			flag = true;
 			moveUser(s);
-			return;
 		}
 	}
 	if (!flag) {
 		 System.out.println(s + " is not a valid command!");
-		 return;
 	}
-	in.close();
 }
 	
 	
