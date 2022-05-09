@@ -301,23 +301,6 @@ public boolean isUserNearDoor() {
 	return false;
 }
 
-/**
- *  Check if user is near the NPC.
- * @param userLocation
- * @return boolean
- */
-public Npc isUserNearNpc(Point userLocation) {
-
-	for(Npc npc : this.currentRoom.getNpcs()) {
-		for(Point p : npc.hitPointsSupplier().get()) {
-			if ((userLocation.x == p.x) && (userLocation.y == p.y)) {
-				return npc;
-			}
-		}
-	}
-
-	return null;
-}
 
 public boolean doesUserHaveKeyForEndingDoor() {
 	for(Item i: User.getBackpack().getBPContents()) {
