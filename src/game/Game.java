@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import NPC.Npc;
 import entity.Backpack;
 import entity.User;
 import item.Item;
@@ -87,7 +88,9 @@ public class Game implements Command {
 		if(isUserNearDoor()) { nearDoorActivity(); }	
 		
 		Item i = isUserNearItem();	
-		if(getItemNearPlayer(i)) { itemInteraction(i); }		
+		if(getItemNearPlayer(i)) { itemInteraction(i); }
+		
+		npcAction();
 		
 		 genericMessage();		
 	}
@@ -217,6 +220,59 @@ public void itemInteraction(Item i) throws Exception {
 		}
 	}
 }
+
+public void npcAction(){
+	// Check if user is near a NPC.
+	Npc n = isUserNearNpc(this.getUser().getLocation());
+	if (n != null) {
+		System.out.println(n.getDescription());
+		System.out.println(n.getMessage());
+		System.out.println("User is now locked into battle with the " + n.getName());
+		
+		int winner = n.battle(getUser());	// The user is in battle with the NPC and returns an int to determine the winner.
+		
+		// User doesn't have equipped weapon.
+		if (winner == 0) {
+			// TODO - Come back to this
+		}
+		
+		// User wins if winner variable is 1.
+		if (winner == 1) {
+			n.win();
+			getCurrentRoom().getNpcs().remove(n);
+			// End game here?
+		}
+		
+		// User loses if winner variable is 2.
+		if (winner == 2) {
+			n.lose();
+			if(getCurrentRoom().getId() == 4) {
+				System.out.println("Do you want to play again? (y or n)");
+			}
+			
+		}
+	}
+}
+		
+		/**
+		 *  Check if user is near the NPC.
+		 * @param userLocation
+		 * @return boolean
+		 */
+		public Npc isUserNearNpc(Point userLocation) {
+			
+			for(Npc npc : this.currentRoom.getNpcs()) {
+				for(Point p : npc.hitPointsSupplier().get()) {
+					if ((userLocation.x == p.x) && (userLocation.y == p.y)) {
+						return npc;
+					}
+				}
+			}
+			
+			return null;
+		}
+		
+	
 
 public boolean isUserNearDoor() {
 	for (Point p: getPointsAroundUser()) {
