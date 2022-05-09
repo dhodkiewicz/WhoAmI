@@ -194,10 +194,6 @@ public class Room {
 			int randValue = (int)Math.floor(Math.random()* (coordinates.size()));
 			Point pt = coordinates.get(randValue);
 			n.setLocation(pt);
-			
-			// TODO  - Remove this after testing is complete.
-			System.out.println(n.getClass());
-			System.out.println(n.getLocation());
 		}
 	}
 

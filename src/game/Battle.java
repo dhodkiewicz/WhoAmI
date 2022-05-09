@@ -1,6 +1,5 @@
 /**
  * This interface holds the methods to generate a battle between NPCs and the user.
- * Note to self: all methods in an interface are public and abstract.
  */
 package game;
 
@@ -17,7 +16,6 @@ public interface Battle {
 	/**
 	 * StreetFight method is called when user does not have an equipped weapon.
 	 * @param u
-	 * @return
 	 */
 	public int streetFight(User u);
 	
@@ -29,7 +27,6 @@ public interface Battle {
 
 	/**
 	 * This method is called when the user loses a battle.
-	 * TODO - This method is unfinished.
 	 */
 	public void lose();
 

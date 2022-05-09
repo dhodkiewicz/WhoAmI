@@ -110,22 +110,6 @@ public class Npc implements Battle{
 	public void setHealth(double health) {
 		this.health = health;
 	}
-
-//	/**
-//	 *  Check if user is near the NPC.
-//	 * @param userLocation
-//	 * @return boolean
-//	 */
-//	public boolean isUserNearNpc(Point userLocation) {
-//		// Loop through hit points.
-//		for (Point p : hitPointsSupplier().get()) {
-//			// If user location matches hit point, return true.
-//			if ((userLocation.x == p.x) && (userLocation.y == p.y)) {
-//				return true;
-//			}
-//		}
-//		return false;	// Return false if user location is not on a hit point.
-//	}
 	
 
 	/**
@@ -200,8 +184,6 @@ public class Npc implements Battle{
 			System.out.println();	// Print new line for readability.
 
 		} while (checkForWinner(u.getHealth(), getHealth()) == false);	//Loop as long as there's no winner.
-		
-		//System.out.println("====================== END BATTLE ======================");
 		
 		return getWinner(u);
 	}

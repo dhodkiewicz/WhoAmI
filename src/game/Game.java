@@ -243,32 +243,40 @@ public void npcAction(){
 	// Check if user is near a NPC.
 	Npc n = isUserNearNpc(this.getUser().getLocation());
 	if (n != null) {
-		System.out.println(n.getDescription());
-		System.out.println(n.getMessage());
+		System.out.println(n.getDescription());	// Print the NPC description.
+		System.out.println(n.getMessage());		// Print the NPC message.
 		System.out.println("User is now locked into battle with the " + n.getName());
-
-		int winner = n.battle(getUser());	// The user is in battle with the NPC and returns an int to determine the winner.
-
-		// User doesn't have equipped weapon.
-		if (winner == 0) {
-			// TODO - Come back to this
+		System.out.println();
+		
+		int winner;	// Holds the winner in a battle/street fight.
+		
+		// Check if user has an equipped weapon.
+		if (doesUserHaveWeaponEquipped()) {
+			winner = n.battle(getUser()); // The user is in battle with the NPC and returns an int to determine the winner.
 		}
-
+		else {
+			// Default attack if user doesn't have an equipped weapon.
+			winner = n.streetFight(user);
+		}
+		
 		// User wins if winner variable is 1.
 		if (winner == 1) {
 			n.win();
-			getCurrentRoom().getNpcs().remove(n);
+			getCurrentRoom().getNpcs().remove(n);	// Remove the npc that was fought off.
+			
+			System.out.println("====================== END BATTLE ======================");
 			// End game here?
 		}
 
 		// User loses if winner variable is 2.
 		if (winner == 2) {
 			n.lose();
-			if(getCurrentRoom().getId() == 4) {
+			System.out.println("====================== END BATTLE ======================");
+			if (getCurrentRoom().getId() == 4) {
 				System.out.println("Do you want to play again? (y or n)");
 			}
-
 		}
+
 	}
 }
 
