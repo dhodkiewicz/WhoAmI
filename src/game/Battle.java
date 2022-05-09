@@ -28,7 +28,7 @@ public interface Battle {
 	/**
 	 * This method is called when the user loses a battle.
 	 */
-	public void lose();
+	public void lose(User u);
 
 	/**
 	 * This method is called when the user wins a battle.

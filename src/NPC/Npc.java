@@ -193,11 +193,9 @@ public class Npc implements Battle{
 	 */
 	@Override
 	public int streetFight(User u) {
-		// TODO Auto-generated method stub
 		double minAttack = getAttack() / 2; 	// The minimum attack a user can make.
-		double tempUserHealth = getHealth();
-		
 		System.out.println("====================== START BATTLE ======================");
+		
 		do {
 			// Get random values for the user and NPC attack.
 			double userAttack = Math.round(getRand().nextDouble(minAttack, getAttack()) * 100.0) / 100.0;
@@ -218,13 +216,13 @@ public class Npc implements Battle{
 			if (randMiss == 7) {
 				System.out.println("The npc missed!");
 			} else {
-				tempUserHealth -= npcAttack;
+				u.setHealth(u.getHealth() - npcAttack);
 				System.out.println("User hit! The npc deals " + npcAttack + " damage!");
 			}
 
 			System.out.println(); // Print new line for readability.
 
-		} while (checkForWinner(tempUserHealth, getHealth()) == false); // Loop as long as there's no winner.
+		} while (checkForWinner(u.getHealth(), getHealth()) == false); // Loop as long as there's no winner.
 
 		 return getWinner(u);
 	}
@@ -268,15 +266,18 @@ public class Npc implements Battle{
 	 * The lose method is called when the user loses a battle against an NPC.
 	 */
 	@Override
-	public void lose() {
+	public void lose(User u) {
 		System.out.println("NPC WINS!");
+		System.out.println("====================== END BATTLE ======================");
 		
 		// If the user is in room 4, ask if they want to play again.
-		if (getRoomID() == 4) {
+		if (getRoomID() == 4 && u.getHealth() > 0) {
 			System.out.println("Do you want to play again? (y or n)");
-		}
-		else {
-			System.out.println("Do you want to continue? (y or n)");
+		} else {
+			if (u.getHealth() > 0) {
+				System.out.println("Do you want to continue? (y or n)");
+			}
+			
 		}
 	}
 	
@@ -286,6 +287,7 @@ public class Npc implements Battle{
 	@Override
 	public void win() {
 		System.out.println("USER WINS!");
+		System.out.println("====================== END BATTLE ======================");
 	}
 
 	public String getName() {

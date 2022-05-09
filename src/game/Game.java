@@ -253,8 +253,7 @@ public void npcAction(){
 		// Check if user has an equipped weapon.
 		if (doesUserHaveWeaponEquipped()) {
 			winner = n.battle(getUser()); // The user is in battle with the NPC and returns an int to determine the winner.
-		}
-		else {
+		} else {
 			// Default attack if user doesn't have an equipped weapon.
 			winner = n.streetFight(user);
 		}
@@ -263,20 +262,12 @@ public void npcAction(){
 		if (winner == 1) {
 			n.win();
 			getCurrentRoom().getNpcs().remove(n);	// Remove the npc that was fought off.
-			
-			System.out.println("====================== END BATTLE ======================");
-			// End game here?
 		}
 
 		// User loses if winner variable is 2.
 		if (winner == 2) {
-			n.lose();
-			System.out.println("====================== END BATTLE ======================");
-			if (getCurrentRoom().getId() == 4) {
-				System.out.println("Do you want to play again? (y or n)");
-			}
+			n.lose(this.getUser());
 		}
-
 	}
 }
 
