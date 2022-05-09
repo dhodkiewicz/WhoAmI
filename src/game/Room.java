@@ -169,10 +169,7 @@ public class Room {
 			int randomValue = (int)Math.floor(Math.random()*(getRoomCoordinates().size())); // random value between 0 and room coords max length
 			Point p = coordinates.get(randomValue); // set a point equal to the random value index of the rooms coordinates
 			i.setLocation(p);
-			System.out.println(i.getClass());
 		}
-		
-		System.out.println("Here");
 	}
 	
 	/**
