@@ -11,6 +11,7 @@ public class User<T> {
 	private Point location;
 	private String Name;
 	private int currentRoom;
+	private double health;
 	private static Backpack backpack;
 	private T equippedWeapon;
 	
@@ -80,6 +81,14 @@ public class User<T> {
 		}
 		
 		return 0.0;
+	}
+
+	public double getHealth() {
+		return health;
+	}
+
+	public void setHealth(double health) {
+		this.health = health;
 	}
 
 }
