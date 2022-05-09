@@ -3,17 +3,18 @@ package game;
 
 public interface Command {
 
-	
-	public void moveNorth();
-	public void moveSouth();
-	public void moveWest();
-	public void moveEast();
 	public void use();
-	public void grab();
-	
-	public void determineMove(String s) throws CloneNotSupportedException;
-	
 
+	
+	public void determineMove() throws CloneNotSupportedException, Exception;
+	
+	   // static method
+    static void hello()
+    {
+        System.out.println("Welcome to WhoAmI!\n \n"
+        		+ "Default movement commands are: \n \n"
+        		+ " move south,\n move north,\n move east,\n move west \n");
+    }
 
 
 }
