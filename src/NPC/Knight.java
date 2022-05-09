@@ -9,11 +9,12 @@ import java.awt.Point;
 public class Knight extends Npc {
 
 	// 1.6 - Proper use of the final keyword.
-	private final String name = "Knight";	// The name of the NPC.
+	//private final String name = "Knight";	// The name of the NPC.
 	private double health = 30;				// The knight's starting health.
 	
 	public Knight(int id) {
 		super(id);
+		this.setName("Knight");
 
 		// Determine the roomID of the knight and set it's details.
 		if (id == 1) {
@@ -47,8 +48,8 @@ public class Knight extends Npc {
 	}
 
 	// Gets the name of this type of NPC.
-	public String getName() {
-		return name;
-	}
+//	public String getName() {
+//		return name;
+//	}
 
 }

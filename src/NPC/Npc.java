@@ -15,6 +15,7 @@ import game.Battle;
 
 public class Npc implements Battle{
 
+	private String name;			
 	private Point location; 		// The location of the NPC.
 	private String description; 	// The description of the NPC.
 	private String message; 		// The message and NPC gives.
@@ -110,21 +111,21 @@ public class Npc implements Battle{
 		this.health = health;
 	}
 
-	/**
-	 *  Check if user is near the NPC.
-	 * @param userLocation
-	 * @return boolean
-	 */
-	public boolean isUserNearNpc(Point userLocation) {
-		// Loop through hit points.
-		for (Point p : hitPointsSupplier().get()) {
-			// If user location matches hit point, return true.
-			if ((userLocation.x == p.x) && (userLocation.y == p.y)) {
-				return true;
-			}
-		}
-		return false;	// Return false if user location is not on a hit point.
-	}
+//	/**
+//	 *  Check if user is near the NPC.
+//	 * @param userLocation
+//	 * @return boolean
+//	 */
+//	public boolean isUserNearNpc(Point userLocation) {
+//		// Loop through hit points.
+//		for (Point p : hitPointsSupplier().get()) {
+//			// If user location matches hit point, return true.
+//			if ((userLocation.x == p.x) && (userLocation.y == p.y)) {
+//				return true;
+//			}
+//		}
+//		return false;	// Return false if user location is not on a hit point.
+//	}
 	
 
 	/**
@@ -132,7 +133,7 @@ public class Npc implements Battle{
 	 *  		4.2 - Use of a functional interface (1. Supplier)
 	 * @return hitPointsSupplier
 	 */
-	private Supplier<List<Point>> hitPointsSupplier() {
+	public Supplier<List<Point>> hitPointsSupplier() {
 		
 		// Supplier generates the hit points around the NPC.
 		// 2.1 - Use of lambda expressions (1)
@@ -165,13 +166,20 @@ public class Npc implements Battle{
 	 * 		1.9 - Proper use of @Override notation.
 	 */
 	@Override
-	public void battle(User u) {
+	public int battle(User u) {
 		double userMinAttack = u.getWeaponStats() / 2;	// The minimum attack a user can make.
 		double knightMinAttack = getAttack() / 2;		// The minimum attack a knight can make.
+		
+		int winner = 0;
+		
+		if (u.getWeaponStats() > 0) {
+			
+	
 		
 		System.out.println("====================== START BATTLE ======================");
 		
 		do {
+			
 			// Get random values for the user and NPC attack.
 			double userAttack = Math.round(getRand().nextDouble(userMinAttack, u.getWeaponStats()) * 100.0) / 100.0;
 			double knightAttack = Math.round(getRand().nextDouble(knightMinAttack, getAttack()) * 100.0) / 100.0;
@@ -191,37 +199,63 @@ public class Npc implements Battle{
 			if (randMiss == 7) {
 				System.out.println("The npc missed!");
 			} else {
-				u.setHealth(u.getHealth() - knightMinAttack);
-				System.out.println("User hit! The npc deals " + knightMinAttack + " damage!");
+				u.setHealth(u.getHealth() - knightAttack);
+				System.out.println("User hit! The npc deals " + knightAttack + " damage!");
 			}
 
 			System.out.println();	// Print new line for readability.
 
-		} while (checkForWinner(u) == false);	//Loop as long as there's no winner.
+		} while (checkForWinner(u) != 0);//(checkForWinner(u) == false);	//Loop as long as there's no winner.
 		
-		System.out.println("====================== END BATTLE ======================");
+		if(checkForWinner(u) == 1) {
+			winner = 1;
+		}
+		else if(checkForWinner(u) == 2) {
+			winner = 2;
+		}
+		}
+		
+		
+		//System.out.println("====================== END BATTLE ======================");
+		return winner;
 	}
 
 	/**
 	 * This method is used to check if there's a winner based on the remaining health of the user and NPC.
 	 */
-	@Override
-	public boolean checkForWinner(User u) {
+//	@Override
+//	public boolean checkForWinner(User u) {
+//		// Check if user or NPC ran out of health.
+//		if (getHealth() <= 0 || u.getHealth() <= 0) {
+//			// If NPC health is out, user wins.
+//			if (getHealth() <= 0) {
+//				win();
+//				return true;
+//			}
+//			// If user health is out, user loses and NPC wins.
+//			if (u.getHealth() <= 0) {
+//				lose();
+//				return true;
+//			}
+//		}
+//
+//		return false;
+//	}
+	
+	public int checkForWinner(User u) {
 		// Check if user or NPC ran out of health.
 		if (getHealth() <= 0 || u.getHealth() <= 0) {
 			// If NPC health is out, user wins.
 			if (getHealth() <= 0) {
-				win();
-				return true;
+				return 1;
 			}
 			// If user health is out, user loses and NPC wins.
 			if (u.getHealth() <= 0) {
-				lose();
-				return true;
+				return 2;
 			}
 		}
 
-		return false;
+		return 0;
 	}
 
 	/**
@@ -246,6 +280,14 @@ public class Npc implements Battle{
 	@Override
 	public void win() {
 		System.out.println("USER WINS!");
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

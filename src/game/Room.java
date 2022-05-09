@@ -11,8 +11,10 @@ import item.Item;
 import item.Key;
 import item.Longsword;
 import item.Shortsword;
-
+import NPC.Goblin;
+import NPC.Knight;
 import NPC.Npc;
+import NPC.Pirate;
 
 public class Room {
 	
@@ -40,7 +42,7 @@ public class Room {
 		
 		populateRoomCoordinates(); // populate room coordinates upon instantiation
 		createRoomItems(id);
-		
+		createRoomNpcs(id);	// Create the NPCs for the room.
 	}
 	
 	/////////////////////////////////////////////////////////DOOR METHODS START//////////////////////////////////////////////////////////////////////////////
@@ -173,6 +175,33 @@ public class Room {
 		System.out.println("Here");
 	}
 	
-
+	/**
+	 * This method creates the NPCs in a specific room.
+	 * @param id
+	 */
+	public void createRoomNpcs(int id) {
+		Goblin g = new Goblin(id);
+		Knight k = new Knight(id);
+		Pirate p = new Pirate(id);
+		
+		this.npcs = new ArrayList<Npc>();	// Create new instance of array list to hold npcs.
+		
+		// Add NPCs to array list.
+		this.npcs.add(g);
+		this.npcs.add(k);
+		this.npcs.add(p);
+		
+		// Set the location of the NPCs.
+		for (Npc n : this.npcs) {
+			List<Point> coordinates = getRoomCoordinates();	// The room coordinates.
+			int randValue = (int)Math.floor(Math.random()* (coordinates.size()));
+			Point pt = coordinates.get(randValue);
+			n.setLocation(pt);
+			
+			// TODO  - Remove this after testing is complete.
+			System.out.println(n.getClass());
+			System.out.println(n.getLocation());
+		}
+	}
 
 }

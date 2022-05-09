@@ -8,12 +8,13 @@ import java.awt.Point;
 
 public class Pirate extends Npc {
 
-	private final String name = "Pirate";	// The name of the NPC.
+	//private final String name = "Pirate";	// The name of the NPC.
 	private double health = 25;				// The pirate's starting health.
 	
 	// Constructor - accepts a room ID.
 	public Pirate(int id) {
 		super(id);
+		this.setName("Pirate");
 		
 		// Determine the roomID of the pirate and set it's details.
 		if (id == 1) {
@@ -48,8 +49,8 @@ public class Pirate extends Npc {
 	}
 
 	// Gets the name of this type of NPC.
-	public String getName() {
-		return name;
-	}
+//	public String getName() {
+//		return name;
+//	}
 
 }
