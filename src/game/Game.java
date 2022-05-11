@@ -12,23 +12,44 @@ import entity.User;
 import item.Item;
 import item.Key;
 
-public class Game implements Command {
+/**
+ * @Game class implements @Command, and @Cloneable interfaces
+ * @fields
+ * <ul>
+ * <li>rooms - a list of rooms
+ * <li>currentRoom - the current room the user is in
+ * <li>user - static field for user
+ * <li>isGameOver - boolean to check if the game is over or not
+ *
+ */
+public class Game implements Command, Cloneable {
 
-	private List<Room>rooms; //field for our list of
-	private Room currentRoom; // the current room user is in
-	private static User user; //field for our user
-	private boolean isGameOver; //field to check if game is over or not
+	private List<Room>rooms; 
+	private Room currentRoom; 
+	private static User user; 
+	private boolean isGameOver; 
 
-	public Game() throws CloneNotSupportedException { // constructor for game will autopopulate rooms (for now) -- next will establish method(s) to link doors/rooms together
+	/**
+	 * Creates instance(s) of:
+	 * <ul>
+	 * <li>Game
+	 * <li>User
+	 * <li>Room x 4
+	 * <li>Backpack
+	 * </ul>
+	 * <p>Initial location of user is set to starting door, properties are set via setters such as
+	 * setGameOver(), the backpack is also set similarly with setBackpack(bp) 
+	 */
+	public Game(){ 
 		this.setGameOver(false);
 		User user = new User();
 		Backpack bp = new Backpack();
 		User.setBackpack(bp);
 		List<Room> rooms = new ArrayList<Room>();
-		Room roomOne= new Room(1); // instantiate a room
-		Room roomTwo= new Room(2); // instantiate a room
-		Room roomThree= new Room(3); // instantiate a room
-		Room roomFour= new Room(4); // instantiate a room
+		Room roomOne= new Room(1); 
+		Room roomTwo= new Room(2); 
+		Room roomThree= new Room(3); 
+		Room roomFour= new Room(4); 
 		roomOne.setDoors();
 		user.setLocation(roomOne.getStartingDoor()); // instantiate user and set their starting position to initial "door"
 		this.currentRoom = roomOne;
@@ -45,31 +66,120 @@ public class Game implements Command {
 		Command.hello();
 	}
 
-	//getter for rooms
+	/**
+	 * Gets the list of rooms
+	 * @return
+	 */
 	public List<Room> getRooms() {
 		return rooms;
 	}
 
-	//setter for rooms
+	/**
+	 * Sets the list of rooms
+	 * @param rooms
+	 */
 	public void setRooms(List<Room> rooms) {
 		this.rooms = rooms;
 	}
 
-	//get user
+	/**
+	 * Gets the user
+	 * @return
+	 */
 	public User getUser() {
 		return user;
 	}
 
-	//set the user
+	/**
+	 * Sets the current user
+	 * @param user
+	 */
 	public void setUser(User user) {
 		Game.user = user;
 	}
 
 
-	@Override
-	public void use() {
-		// TODO Auto-generated method stub
+	public void use(String str) {
+		if(str.equals("use")) {
+			List<Item> tempList = new ArrayList<Item>();
+			tempList = User.getBackpack().getBPContents();
+			boolean hasFlashlight = false, hasHealthPot = false;
+			Item flashlight = null;
+			Item healthpot = null;
+			
+			for(Item i : tempList){
+				try {
+					if(i.getType().equals("Flashlight")) {
+						hasFlashlight = true;
+						flashlight = i;
+					}
+					if(i.getType().equals("Health Potion")) {
+						hasHealthPot = true;
+						healthpot = i;
+					}
+				} catch (CloneNotSupportedException e) {
+					System.out.println("Broke determining if user has flashlight or healthpotion");
+				}
+			}
+			
+			if(!hasFlashlight && !hasHealthPot) {System.out.println("You've nothing to use"); return; }
+			
+			if(hasFlashlight && hasHealthPot) {
+				System.out.println("Which would you like to use? light/potion");
+				Scanner in = new Scanner(System.in);
+				String s = in.nextLine();
+				if(s.equals("light")) {
+					useLight();
+					return;
+				}
+				if(s.equals("potion")) {
+					User.getBackpack().getBPContents().remove(healthpot);
+					usePotion();
+					return;
+					
+				}
+				else {
+					System.out.println("Not a valid command for use, only light or potion allowed");
+				}	
+			}
+			
+			if(hasFlashlight && !hasHealthPot) {
+				System.out.println("Would you like to use the Flashlight? y/n");
+				Scanner in = new Scanner(System.in);
+				String s = in.nextLine();
+				if(s.equals("y")) {
+					useLight();
+					return;
+				}
+				if(s.equals("n")) {
+					System.out.println("Fine then no light for you!");
+				}
+				
+				else {
+					System.out.println("Not a valid command for use, only y or n allowed");
+				}	
+			}
+			
+			if(!hasFlashlight && hasHealthPot) {
+				System.out.println("Would you like to your health potion? y/n");
+				Scanner in = new Scanner(System.in);
+				String s = in.nextLine();
+				if(s.equals("y")) {
+					User.getBackpack().getBPContents().remove(healthpot);
+					usePotion();
+					return;
+				}
+				if(s.equals("n")) {
+					System.out.println("Okay then!");
+					return;					
+				}
+				else {
+					System.out.println("Not a valid command for use, only y or n allowed ");
+				}	
+			}
 
+		}
+		
 	}
 
 
@@ -111,31 +221,17 @@ public class Game implements Command {
 		return false;
 	}
 
-public void genericMessage() {
+	public void genericMessage() {
 
 	boolean flag = false;
-	boolean doesUserHaveFlashlight = false;
-
 
 	System.out.println("Please enter a command:");
 	Scanner in = new Scanner(System.in);
 	String s = in.nextLine();
 
-	this.getUser();
-	for(Item i : User.getBackpack().getBPContents()) {
-
-				try {
-					if(i.getType().equals("Flashlight")) {
-					doesUserHaveFlashlight = true;
-					}
-				} catch (CloneNotSupportedException e) {
-					System.out.println(e);
-				}
-	}
-
-	if(s.equals("light") && doesUserHaveFlashlight) {
-		System.out.println("I have the light! :)");
-	}
+	use(s);
+	
+	if(s.equals("use") || s.equals("y") || s.equals("n")) return;
 
 	for (ValidCommands vc: ValidCommands.values()) {
 
@@ -395,6 +491,60 @@ public void nearDoorActivity() {
 			return;
 		}
 	}
+}
+
+public void usePotion() {
+	User u = getUser();
+	Double userHealth = u.getHealth();
+	u.getBackpack().getBPContents().removeIf(i -> {
+		try {
+			return (i.getType().equals("HealthPotion"));
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	});
+	userHealth = userHealth + 50;
+	getUser().setHealth(userHealth);
+	System.out.println("You have healed for 50 points, your health is now " + userHealth);
+}
+
+public void useLight() {
+	Room r = getCurrentRoom();
+	Point userLocation = getUser().getLocation();
+	int x = userLocation.x;
+	int y = userLocation.y;
+	
+	int counter = 0;
+	for(Item i : r.getRoomItems()) {
+		Point p = i.getLocation();
+		if(p.x - x < 10 && p.y - y < 10){
+			counter++;
+			String horizontal = "";
+			String vertical = "";
+			try {
+				
+				if(p.x < x) { horizontal = (x - p.x) + " spaces West, "; }
+				if(p.x > x) { horizontal = (p.x - x) + " spaces East, "; }
+				if(p.y < y) { vertical = (y - p.y) + " spaces South"; }
+				if(p.y > y) { vertical = (p.y - y) + " spaces North"; }
+				
+				System.out.println(i.getType() + " is " + horizontal + vertical);
+				
+			} catch (CloneNotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	if (counter == 0) {System.out.println("nothing to see here!");}
+}
+
+@Override
+public void use() {
+	// TODO Auto-generated method stub
+	
 }
 
 
