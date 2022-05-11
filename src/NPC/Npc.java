@@ -148,9 +148,10 @@ public class Npc implements Battle{
 	 * This method performs a battle between the user and an NPC.
 	 * 		1.4 - Use of overridden methods.
 	 * 		1.9 - Proper use of @Override notation.
+	 * @throws InterruptedException 
 	 */
 	@Override
-	public int battle(User u) {
+	public int battle(User u) throws InterruptedException {
 		double userMinAttack = u.getWeaponStats() / 2;	// The minimum attack a user can make.
 		double knightMinAttack = getAttack() / 2;		// The minimum attack a knight can make.
 		
@@ -182,6 +183,8 @@ public class Npc implements Battle{
 			}
 
 			System.out.println();	// Print new line for readability.
+			
+			Thread.sleep(1000);
 
 		} while (checkForWinner(u.getHealth(), getHealth()) == false);	//Loop as long as there's no winner.
 		
@@ -190,9 +193,10 @@ public class Npc implements Battle{
 	
 	/**
 	 * This method is used when a user encounters an NPC but does not have a weapon equipped.
+	 * @throws InterruptedException 
 	 */
 	@Override
-	public int streetFight(User u) {
+	public int streetFight(User u) throws InterruptedException {
 		double minAttack = getAttack() / 2; 	// The minimum attack a user can make.
 		System.out.println("====================== START BATTLE ======================");
 		
@@ -221,6 +225,8 @@ public class Npc implements Battle{
 			}
 
 			System.out.println(); // Print new line for readability.
+			
+			Thread.sleep(100);
 
 		} while (checkForWinner(u.getHealth(), getHealth()) == false); // Loop as long as there's no winner.
 
