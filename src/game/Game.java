@@ -534,19 +534,31 @@ public void useLight() {
 	int x = userLocation.x;
 	int y = userLocation.y;
 	
+	
+	
 	int counter = 0;
 	for(Item i : r.getRoomItems()) {
 		Point p = i.getLocation();
-		if(p.x - x < 10 && p.y - y < 10){
+		
+		double distance = Math.sqrt((p.x - x)*(p.x - x) + (p.y - y)*(p.y - y));
+		if(distance < 6){
 			counter++;
 			String horizontal = "";
 			String vertical = "";
 			try {
+				if( x > p.x) {
+					horizontal = (x - p.x) + " spaces West, ";
+				}
+				if( x < p.x) {
+					horizontal = (p.x - x) + " spaces East, ";
+				}
+				if( y > p.y) {
+					horizontal = (y - p.y) + " spaces South, ";
+				}
+				if( y < p.y) {
+					horizontal = (p.y - y) + " spaces North, ";
+				}
 				
-				if(p.x < x) { horizontal = (x - p.x) + " spaces West, "; }
-				if(p.x > x) { horizontal = (p.x - x) + " spaces East, "; }
-				if(p.y < y) { vertical = (y - p.y) + " spaces South"; }
-				if(p.y > y) { vertical = (p.y - y) + " spaces North"; }
 				
 				System.out.println(i.getType() + " is " + horizontal + vertical);
 				
