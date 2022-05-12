@@ -335,7 +335,7 @@ public void itemInteraction(Item i) throws Exception {
 	}
 }
 
-public void npcAction(){
+public void npcAction() throws InterruptedException{
 	// Check if user is near a NPC.
 	Npc n = isUserNearNpc(this.getUser().getLocation());
 	if (n != null) {
@@ -363,6 +363,24 @@ public void npcAction(){
 		// User loses if winner variable is 2.
 		if (winner == 2) {
 			n.lose(this.getUser());
+		}
+		
+		// If user is the winner, doesn't have a key, and there are no NPCs left in the room, give user the key.
+		if (winner == 1 && this.currentRoom.getNpcs().size() == 0 && this.doesUserHaveKeyForEndingDoor() != true) {
+			giveUserRoomKey();
+		}
+	}
+}
+
+/**
+ * Give user the room key. Used when the user wins the third battle with an NPC in a room if they
+ * don't already have a key.
+ */
+public void giveUserRoomKey() {
+	// Loop through room items and add the key to the backpack.
+	for(Item item : this.currentRoom.getRoomItems()) {
+		if(item instanceof Key) {
+			User.getBackpack().addItem(item);
 		}
 	}
 }

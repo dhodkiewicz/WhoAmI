@@ -10,14 +10,16 @@ public interface Battle {
 	/**
 	 * Battle method accepts a user that will be used for battle with NPC.
 	 * @param u
+	 * @throws InterruptedException 
 	 */
-	public int battle(User u);
+	public int battle(User u) throws InterruptedException;
 	
 	/**
 	 * StreetFight method is called when user does not have an equipped weapon.
 	 * @param u
+	 * @throws InterruptedException 
 	 */
-	public int streetFight(User u);
+	public int streetFight(User u) throws InterruptedException;
 	
 	/**
 	 * This method is used to check if there's a winner by looking at the user and NPC health.
