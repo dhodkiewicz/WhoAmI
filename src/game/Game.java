@@ -1,7 +1,6 @@
 package game;
 
 import java.awt.Point;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -99,19 +98,22 @@ public class Game implements Command, Cloneable {
 	}
 
 
+	/**
+	 * Method that checks to see if User has a usable item,
+	 * takes an input string, and depending on backpack contents allows for usage
+	 * @param str
+	 */
 	public void use(String str) {
 		if(str.equals("use")) {
 			List<Item> tempList = new ArrayList<Item>();
 			tempList = User.getBackpack().getBPContents();
 			boolean hasFlashlight = false, hasHealthPot = false;
-			Item flashlight = null;
 			Item healthpot = null;
 			
 			for(Item i : tempList){
 				try {
 					if(i.getType().equals("Flashlight")) {
 						hasFlashlight = true;
-						flashlight = i;
 					}
 					if(i.getType().equals("Health Potion")) {
 						hasHealthPot = true;
@@ -183,10 +185,18 @@ public class Game implements Command, Cloneable {
 	}
 
 
+	/**
+	 * Checks if the game is over or not
+	 * @return
+	 */
 	public boolean isGameOver() {
 		return isGameOver;
 	}
 
+	/**
+	 * Sets if the game is over or not
+	 * @param isGameOver
+	 */
 	public void setGameOver(boolean isGameOver) {
 		this.isGameOver = isGameOver;
 	}
@@ -206,6 +216,11 @@ public class Game implements Command, Cloneable {
 	}
 
 
+	/**
+	 * returns true if there is an item near a player
+	 * @param i
+	 * @return
+	 */
 	public static boolean getItemNearPlayer(Item i){
 		if(i == null)
 		return false;
@@ -214,6 +229,11 @@ public class Game implements Command, Cloneable {
 		}
 	}
 
+	/**
+	 * Checks to see if a valid weapon is equipped or not
+	 * @param s
+	 * @return true if it's a valid equip command
+	 */
 	public boolean isValidEquipCommand(String s) {
 		if(s == "y" | s == "n") {
 			return true;
@@ -246,7 +266,10 @@ public class Game implements Command, Cloneable {
 }
 
 
-
+/**
+ * Method to move the user
+ * @param s takes a string for the movement command
+ */
 public void moveUser(String s) {
 	int xValue;
 	int yValue;
@@ -292,14 +315,26 @@ public void moveUser(String s) {
 	Game.user = tempUser;
   }
 
+/**
+ * gets Game's the current room
+ * @return
+ */
 public Room getCurrentRoom() {
 	return currentRoom;
 }
 
+/**
+ * sets the current room
+ * @param currentRoom
+ */
 public void setCurrentRoom(Room currentRoom) {
 	this.currentRoom = currentRoom;
 }
 
+/**
+ * Checks to see if the user is near an item or not
+ * @return
+ */
 public Item isUserNearItem() {
 	Room r = getCurrentRoom();
 
@@ -314,6 +349,11 @@ public Item isUserNearItem() {
 	return null;
 }
 
+/**
+ * Method for allowing the user to pick up an item
+ * @param i
+ * @throws Exception
+ */
 public void itemInteraction(Item i) throws Exception {
 	System.out.println("User is near a " + i.getType() + " would you like to pick it up? Enter y/n");
 	Scanner in = new Scanner(System.in);
@@ -335,6 +375,9 @@ public void itemInteraction(Item i) throws Exception {
 	}
 }
 
+/**
+ * Method for user interaction
+ */
 public void npcAction(){
 	// Check if user is near a NPC.
 	Npc n = isUserNearNpc(this.getUser().getLocation());
@@ -372,11 +415,11 @@ public void npcAction(){
 		 * @param userLocation
 		 * @return boolean
 		 */
-		public Npc isUserNearNpc(Point userLocation) {
+public Npc isUserNearNpc(Point userLocation) {
 
-			for(Npc npc : this.currentRoom.getNpcs()) {
-				for(Point p : npc.hitPointsSupplier().get()) {
-					if ((userLocation.x == p.x) && (userLocation.y == p.y)) {
+	for(Npc npc : this.currentRoom.getNpcs()) {
+		for(Point p : npc.hitPointsSupplier().get()) {
+		if ((userLocation.x == p.x) && (userLocation.y == p.y)) {
 						return npc;
 					}
 				}
@@ -386,7 +429,10 @@ public void npcAction(){
 		}
 
 
-
+/**
+ * Checks if the user is near and ending door or not
+ * @return
+ */
 public boolean isUserNearDoor() {
 	for (Point p: getPointsAroundUser()) {
 		if(p.equals(this.currentRoom.getEndingDoor())) {
@@ -396,7 +442,10 @@ public boolean isUserNearDoor() {
 	return false;
 }
 
-
+/**
+ * Checks to see if user has a key for the ending door or not
+ * @return
+ */
 public boolean doesUserHaveKeyForEndingDoor() {
 	for(Item i: User.getBackpack().getBPContents()) {
 		if(i.getClass() == Key.class) {
@@ -408,6 +457,10 @@ public boolean doesUserHaveKeyForEndingDoor() {
 	return false;
 }
 
+/**
+ * checks if the user currently has a weapon equipped or not
+ * @return
+ */
 public boolean doesUserHaveWeaponEquipped() {
 	if (Game.user.getEquippedWeapon() == null) {
 		return false;
@@ -446,6 +499,10 @@ public List<Point> getPointsAroundUser(){
 	return points;
 }
 
+/**
+ * checks to see if the users current item is better or not, if it is, ask if they want to equip it
+ * @param i
+ */
 public void isItemBetter(Item i) {
 	System.out.println("Your current weapon is " + ((Item) Game.user.getEquippedWeapon()).getDescription());
 	System.out.println("Would you like to replace it with " + i.getDescription() + "? y/n");
@@ -467,6 +524,12 @@ public void isItemBetter(Item i) {
 	}
 }
 
+/**
+ * checks to see if the current item is a weapon
+ * @param i
+ * @return a boolean value, true if it's a weapon type
+ * @throws CloneNotSupportedException - because of calls to getType() method
+ */
 public boolean isItemAWeapon(Item i) throws CloneNotSupportedException {
 	if(i.getType() == "Axe" |i.getType() == "Sword" | i.getType() == "Longsword" ) {
 		return true;
@@ -474,6 +537,9 @@ public boolean isItemAWeapon(Item i) throws CloneNotSupportedException {
 	return false;
 }
 
+/**
+ * Prompts user to ask if they would like to try and go through the ending door
+ */
 public void nearDoorActivity() {
 	String msg = "User is near the ending door, would you like to go through? y/n";
 	System.out.println(msg);
@@ -493,6 +559,9 @@ public void nearDoorActivity() {
 	}
 }
 
+/**
+ * Allows the user to use a potion if they have one and then removes from the backpack
+ */
 public void usePotion() {
 	User u = getUser();
 	Double userHealth = u.getHealth();
@@ -500,8 +569,7 @@ public void usePotion() {
 		try {
 			return (i.getType().equals("HealthPotion"));
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Broke in usePotion method: " + e);
 		}
 		return true;
 	});
@@ -510,20 +578,21 @@ public void usePotion() {
 	System.out.println("You have healed for 50 points, your health is now " + userHealth);
 }
 
+/**
+ * Method to use light
+ */
 public void useLight() {
 	Room r = getCurrentRoom();
 	Point userLocation = getUser().getLocation();
 	int x = userLocation.x;
 	int y = userLocation.y;
-	
-	
-	
+		
 	int counter = 0;
 	for(Item i : r.getRoomItems()) {
 		Point p = i.getLocation();
 		
-		double distance = Math.sqrt((p.x - x)*(p.x - x) + (p.y - y)*(p.y - y));
-		if(distance < 6){
+		double distance = Math.sqrt((p.x - x)*(p.x - x) + (p.y - y)*(p.y - y)); // gets the point distance calculated as the square root of (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)
+		if(distance < 6){ // if the distance is within 6 spaces
 			counter++;
 			String horizontal = "";
 			String vertical = "";
@@ -540,8 +609,7 @@ public void useLight() {
 				if( y < p.y) {
 					horizontal = (p.y - y) + " spaces North, ";
 				}
-				
-				
+								
 				System.out.println(i.getType() + " is " + horizontal + vertical);
 				
 			} catch (CloneNotSupportedException e) {
@@ -551,12 +619,6 @@ public void useLight() {
 		}
 	}
 	if (counter == 0) {System.out.println("nothing to see here!");}
-}
-
-@Override
-public void use() {
-	// TODO Auto-generated method stub
-	
 }
 
 

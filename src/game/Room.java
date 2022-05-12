@@ -30,8 +30,8 @@ public class Room {
 	
 	public Room(int id) { // the rooms constructor
 		this.id = id;
-		final int upper_bound = 40; // set upper bound for x axis and y axis of room
-		final int lower_bound = 30; // set lower bound for x axis and y axis
+		final int upper_bound = 25; // set upper bound for x axis and y axis of room
+		final int lower_bound = 20; // set lower bound for x axis and y axis
 		
 		int randomValue = (int)Math.floor(Math.random()*(upper_bound-lower_bound+1)+ lower_bound); // generate random value between lower + upper bound
 		Point point = new Point(); // create a new point which will hold random generated outer bound x,y values
